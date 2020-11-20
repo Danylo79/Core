@@ -7,6 +7,9 @@ import dev.dankom.core.module.Module;
 import dev.dankom.core.module.ModuleManager;
 import dev.dankom.logger.LogLevel;
 import dev.dankom.logger.Logger;
+import dev.dankom.trigger.Trigger;
+import dev.dankom.trigger.TriggerManager;
+import dev.dankom.trigger.TriggerMethod;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -15,22 +18,27 @@ import java.io.*;
 public class Start extends JavaPlugin implements IResourceManager {
 
     private ModuleManager moduleManager;
+    private TriggerManager triggerManager;
     public static String v = null;
 
     @Override
     public void onEnable() {
         this.moduleManager = new ModuleManager();
+        this.triggerManager = new TriggerManager();
         new FileManager();
 
         this.v = Bukkit.getServer().getClass().getPackage().getName();
         this.v = v.substring(v.lastIndexOf(".") + 1);
 
         moduleManager.registerModule(new Core());
+        triggerManager.register(this);
 
         for (Module m : moduleManager.getModules()) {
             Logger.log(LogLevel.INFO, "Activating " + m.getName() + " module!");
             m.onEnable();
         }
+
+        new Trigger("startup");
     }
 
     @Override
@@ -39,6 +47,8 @@ public class Start extends JavaPlugin implements IResourceManager {
             m.onDisable();
             Logger.log(LogLevel.INFO, "Deactivating " + m.getName() + " module!");
         }
+
+        new Trigger("startup");
     }
 
     public static Start getInstance() {
@@ -80,5 +90,9 @@ public class Start extends JavaPlugin implements IResourceManager {
         } catch (IOException ex) {
             Logger.log(LogLevel.ERROR, "Could not save " + outFile.getName() + " to " + outFile);
         }
+    }
+
+    public TriggerManager getTriggerManager() {
+        return triggerManager;
     }
 }
