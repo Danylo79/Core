@@ -1,7 +1,9 @@
 package dev.dankom.core.profile.profileManager;
 
+import dev.dankom.core.format.ChatFormat;
 import dev.dankom.core.profile.Profile;
 import dev.dankom.core.rank.Rank;
+import org.bukkit.ChatColor;
 
 public class SimpleProfileManager implements IProfileManager {
     @Override
@@ -33,5 +35,10 @@ public class SimpleProfileManager implements IProfileManager {
         profile.set("rank", rank.getId());
         sentActionbar("&aYour rank has been set to " + rank.getDisplay() + "&a!", profile);
         profile.update();
+    }
+
+    @Override
+    public String getChatFormat(String msg, Profile profile) {
+        return ChatColor.translateAlternateColorCodes('&', new ChatFormat(msg, profile).format());
     }
 }

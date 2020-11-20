@@ -1,6 +1,7 @@
 package dev.dankom.core.file.yml;
 
 import dev.dankom.core.file.IResourceManager;
+import dev.dankom.logger.LogLevel;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -35,6 +36,7 @@ public class ConfigFile {
     }
 
     public void set(String key, Object value) {
+        dev.dankom.logger.Logger.log(LogLevel.INFO, dataConfig.toString());
         this.dataConfig.set(key, value);
         this.saveConfig();
     }
@@ -57,21 +59,13 @@ public class ConfigFile {
         return getConfig().getBoolean(path);
     }
 
-    public double getDouble(String path) {
-        return getConfig().getDouble(path);
-    }
-
     public Object get(String path) {
         return getConfig().get(path);
     }
 
-    public boolean exists() {
-        return configFile.exists();
-    }
-
     public void saveConfig() {
+        logger.log(Level.INFO, "Config Saving!");
         if (this.dataConfig == null || this.configFile == null) {
-            saveDefaultConfig();
             return;
         }
         try {
@@ -89,10 +83,5 @@ public class ConfigFile {
         if (!this.configFile.exists()) {
             this.resourceManager.saveResource(dataFolder, this.fileName, false);
         }
-    }
-
-    public void purge() {
-        configFile.delete();
-        configFile = null;
     }
 }

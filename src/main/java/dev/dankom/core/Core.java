@@ -1,7 +1,8 @@
 package dev.dankom.core;
 
+import dev.dankom.core.commands.CosmeticCommands;
+import dev.dankom.core.commands.EcoCommand;
 import dev.dankom.core.commands.RankCommands;
-import dev.dankom.core.file.IResourceManager;
 import dev.dankom.core.listeners.ProfileListener;
 import dev.dankom.core.module.Module;
 import dev.dankom.core.profile.Profile;
@@ -19,6 +20,8 @@ public final class Core extends Module {
 
         setCommandExecutor("setRank", new RankCommands());
         setCommandExecutor("rank", new RankCommands());
+        setCommandExecutor("cosmetics", new CosmeticCommands());
+        setCommandExecutor("eco", new EcoCommand());
     }
 
     @Override

@@ -13,19 +13,19 @@ public class ProfileListener implements Listener {
     public void onJoin(PlayerJoinEvent e) {
         Profile profile = new Profile(e.getPlayer());
         profile.addPlayerData();
-        profile.update();
+        profile.getProfileManager().refreshPlayer(profile);
     }
 
     @EventHandler
     public void onQuit(PlayerQuitEvent e) {
         Profile profile = new Profile(e.getPlayer());
         profile.addPlayerData();
-        profile.update();
+        profile.getProfileManager().refreshPlayer(profile);
     }
 
     @EventHandler
     public void onChat(AsyncPlayerChatEvent e) {
         Profile profile = new Profile(e.getPlayer());
-        e.setFormat(ChatColor.translateAlternateColorCodes('&', profile.getFullName() + "&f: " + e.getMessage()));
+        e.setFormat(profile.getProfileManager().getChatFormat(e.getMessage(), profile));
     }
 }

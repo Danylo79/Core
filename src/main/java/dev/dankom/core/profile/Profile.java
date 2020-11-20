@@ -1,6 +1,5 @@
 package dev.dankom.core.profile;
 
-import dev.dankom.Start;
 import dev.dankom.core.file.FileManager;
 import dev.dankom.core.file.yml.ConfigFile;
 import dev.dankom.core.profile.profileManager.IProfileManager;
@@ -12,8 +11,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.UUID;
 
 public class Profile {
@@ -36,7 +33,11 @@ public class Profile {
         addData("uuid", player.getUniqueId().toString());
         addData("name", player.getName());
         addData("rank", 0);
-        addData("coins", 0);
+        addData("coins", 0.0);
+        //Network Data
+        addData("network.level", 0);
+        addData("network.xp", 0);
+        addData("network.lobby", false);
         //Lobby
         addData("lobby.hidePlayers", false);
         addData("lobby.fly", false);
