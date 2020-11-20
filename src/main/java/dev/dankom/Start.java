@@ -1,19 +1,29 @@
 package dev.dankom;
 
 import dev.dankom.core.Core;
+import dev.dankom.core.file.FileManager;
+import dev.dankom.core.file.IResourceManager;
 import dev.dankom.core.module.Module;
 import dev.dankom.core.module.ModuleManager;
 import dev.dankom.logger.LogLevel;
 import dev.dankom.logger.Logger;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class Start extends JavaPlugin {
+import java.io.*;
+
+public class Start extends JavaPlugin implements IResourceManager {
 
     private ModuleManager moduleManager;
+    public static String v = null;
 
     @Override
     public void onEnable() {
         this.moduleManager = new ModuleManager();
+        new FileManager();
+
+        this.v = Bukkit.getServer().getClass().getPackage().getName();
+        this.v = v.substring(v.lastIndexOf(".") + 1);
 
         moduleManager.registerModule(new Core());
 
@@ -33,5 +43,42 @@ public class Start extends JavaPlugin {
 
     public static Start getInstance() {
         return getPlugin(Start.class);
+    }
+
+    public void saveResource(File dataFolder, String resourcePath, boolean replace) {
+        if (resourcePath == null || resourcePath.equals("")) {
+            throw new IllegalArgumentException("ResourcePath cannot be null or empty");
+        }
+
+        resourcePath = resourcePath.replace('\\', '/');
+        InputStream in = getResource(resourcePath);
+        if (in == null) {
+            throw new IllegalArgumentException("The embedded resource '" + resourcePath + "' cannot be found in " + dataFolder);
+        }
+
+        File outFile = new File(dataFolder, resourcePath);
+        int lastIndex = resourcePath.lastIndexOf('/');
+        File outDir = new File(dataFolder, resourcePath.substring(0, lastIndex >= 0 ? lastIndex : 0));
+
+        if (!outDir.exists()) {
+            outDir.mkdirs();
+        }
+
+        try {
+            if (!outFile.exists() || replace) {
+                OutputStream out = new FileOutputStream(outFile);
+                byte[] buf = new byte[1024];
+                int len;
+                while ((len = in.read(buf)) > 0) {
+                    out.write(buf, 0, len);
+                }
+                out.close();
+                in.close();
+            } else {
+                Logger.log(LogLevel.ERROR, "Could not save " + outFile.getName() + " to " + outFile + " because " + outFile.getName() + " already exists.");
+            }
+        } catch (IOException ex) {
+            Logger.log(LogLevel.ERROR, "Could not save " + outFile.getName() + " to " + outFile);
+        }
     }
 }

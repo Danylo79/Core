@@ -1,3 +1,6 @@
 name: Core
 version: ${project.version}
 main: dev.dankom.Start
+commands:
+  setRank:
+  rank:

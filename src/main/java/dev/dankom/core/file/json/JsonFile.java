@@ -2,6 +2,7 @@ package dev.dankom.core.file.json;
 
 import dev.dankom.logger.LogLevel;
 import dev.dankom.logger.Logger;
+import org.bukkit.Bukkit;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -138,5 +139,29 @@ public class JsonFile {
         JSONArray jsonArray = (JSONArray) json.get(array);
         jsonArray.add(o);
         set(array, jsonArray);
+    }
+
+    public void replaceInArray(String array, Object o, int index) {
+        JSONArray jsonArray = (JSONArray) json.get(array);
+        jsonArray.remove(index);
+        jsonArray.add(o);
+        set(array, jsonArray);
+    }
+
+    public int getInArray(String array, String identifier, String value) {
+        JSONArray jsonArray = (JSONArray) json.get(array);
+        for (int i = 0; i < jsonArray.size(); i++) {
+            JSONObject item = (JSONObject) jsonArray.get(i);
+            if (item.get(identifier) != null && item.get(identifier).equals(value)) {
+                return i;
+            } else {
+                continue;
+            }
+        }
+        return -1;
+    }
+
+    public JSONArray getArray(String array) {
+        return (JSONArray) json.get(array);
     }
 }
