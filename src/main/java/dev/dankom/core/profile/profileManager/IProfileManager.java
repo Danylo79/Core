@@ -69,24 +69,26 @@ public interface IProfileManager {
         }
     }
 
-    default void giveCoins(int amt, boolean actionbar, Profile profile) {
+    default void giveCoins(int amt, boolean message, Profile profile) {
         int coins = (int) profile.get("coins");
         double rankMultiplier = profile.getRank().getMultiplier();
         double lvlMultiplier = getLevelMultiplier(profile);
         double add = coins + (amt * (rankMultiplier + lvlMultiplier));
-        if (actionbar) {
+        if (message) {
             sentActionbar("&6+" + add + "(&b" + rankMultiplier + "&6x rank multiplier) (&b" + lvlMultiplier + "&6x level multiplier)", profile);
+            sendMessage("&6+" + add + "(&b" + rankMultiplier + "&6x rank multiplier) (&b" + lvlMultiplier + "&6x level multiplier)", profile);
         }
         profile.set("coins", add);
     }
 
-    default void giveXp(int amt, boolean actionbar, Profile profile) {
+    default void giveXp(int amt, boolean message, Profile profile) {
         int xp = (int) profile.get("network.xp");
         double rankMultiplier = profile.getRank().getMultiplier();
         double lvlMultiplier = getLevelMultiplier(profile);
         double add = xp + (amt * (rankMultiplier + lvlMultiplier));
-        if (actionbar) {
+        if (message) {
             sentActionbar("&6+" + add + "(&b" + rankMultiplier + "&6x rank multiplier) (&b" + lvlMultiplier + "&6x level multiplier)", profile);
+            sendMessage("&6+" + add + "(&b" + rankMultiplier + "&6x rank multiplier) (&b" + lvlMultiplier + "&6x level multiplier)", profile);
         }
         profile.set("network.xp", add);
     }
