@@ -1,8 +1,14 @@
 name: Core
 version: ${project.version}
 main: dev.dankom.Start
+depend:
+  - HeadDatabase
 commands:
   setRank:
   rank:
   cosmetics:
   eco:
+  guild:
+  g:
+  prestige:
+  lobby:

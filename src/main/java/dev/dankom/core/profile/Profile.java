@@ -1,16 +1,20 @@
 package dev.dankom.core.profile;
 
-import dev.dankom.core.file.FileManager;
+import dev.dankom.Start;
+import dev.dankom.core.achievment.Achievement;
+import dev.dankom.core.achievment.Achievements;
 import dev.dankom.core.file.yml.ConfigFile;
+import dev.dankom.core.guild.Guild;
+import dev.dankom.core.guild.GuildManager;
 import dev.dankom.core.profile.profileManager.IProfileManager;
 import dev.dankom.core.profile.profileManager.SimpleProfileManager;
 import dev.dankom.core.rank.Rank;
-import dev.dankom.logger.LogLevel;
-import dev.dankom.logger.Logger;
+import dev.dankom.util.linkedlist.Node;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class Profile {
@@ -33,10 +37,14 @@ public class Profile {
         addData("uuid", player.getUniqueId().toString());
         addData("name", player.getName());
         addData("rank", 0);
-        addData("coins", 0.0);
+        addData("coins", 0);
+        addData("guild", "");
+        addData("friends", new ArrayList<String>());
         //Network Data
-        addData("network.level", 0);
+        addData("network.level", 1);
         addData("network.xp", 0);
+        addData("network.achievementPoints", 0);
+        addData("network.prestigeIcon", "");
         addData("network.lobby", false);
         //Lobby
         addData("lobby.hidePlayers", false);
@@ -45,6 +53,10 @@ public class Profile {
         addData("nick.nicked", false);
         addData("nick.name", "");
         addData("nick.rank", 0);
+        //Achievements
+        for (Achievement a : Achievements.getAchievements()) {
+            addData("achievement." + a.getDatabaseName(), false);
+        }
     }
 
     public void update() {
@@ -53,16 +65,16 @@ public class Profile {
     }
 
     public Rank getRank() {
-        if (database().getBoolean("nick.nicked")) {
-            return Rank.get(database().getInt("nick.rank"));
+        if ((boolean) get("nick.nicked")) {
+            return Rank.get((Integer) get("nick.nicked"));
         } else {
-            return Rank.get(database().getInt("rank"));
+            return Rank.get((Integer) get("rank"));
         }
     }
 
     private void addData(String s, Object s1) {
-        if (database().get("profiles." + player.getUniqueId() + s) == null) {
-            database().set("profiles." + player.getUniqueId() + "." + s, s1);
+        if (get(s) == null || (s1 instanceof Integer && get(s) instanceof Integer && (int) get(s) == 0) || (s1 instanceof Double && get(s) instanceof Double && (double) get(s) == 0)) {
+            set(s, s1);
         }
     }
 
@@ -71,9 +83,9 @@ public class Profile {
     }
 
     public void set(String key, Object value) {
-        Logger.log(LogLevel.INFO, "Key:" + key + " Value: " + value);
         database().set("profiles." + player.getUniqueId() + "." + key, value);
         save();
+        getProfileManager().refreshPlayer(this);
     }
 
     public void save() {
@@ -82,19 +94,155 @@ public class Profile {
     }
 
     public ConfigFile database() {
-        return FileManager.databaseFile;
+        return Start.getInstance().getFileManager().databaseFile;
     }
 
     public String getFullName() {
-        return ChatColor.translateAlternateColorCodes('&', getRank().getColor() + getRank().getName() + (getRank().getName().equals("") ? "" : " ") + getName());
+        return ChatColor.translateAlternateColorCodes('&', getRank().getColor() + getRank().getDisplay() + (getRank().getDisplay().equals("") ? "" : " ") + getName() + getGuildTag());
+    }
+
+    public String getGuildTag() {
+        if (getGuild() != null && !getGuild().getColoredTag().equals("") && !(boolean) get("nick.nicked")) {
+            return " " + getGuild().getColoredTag();
+        }
+        return "";
     }
 
     public String getName() {
-        if (database().getBoolean("nick.nicked")) {
+        save();
+        if ((boolean) get("nick.nicked")) {
             return (String) get("nick.name");
         } else {
             return (String) get("name");
         }
+    }
+
+    public String getLevelTag() {
+        int lvl = (int) get("network.level");
+        return ChatColor.translateAlternateColorCodes('&', formatLevelTag(lvl));
+    }
+
+    public String toRainbow(String string) {
+        Node colors = new Node("&c");
+        Node node = colors.setNext(new Node("&6"));
+        node = node.setNext(new Node("&e"));
+        node = node.setNext(new Node("&a"));
+        node = node.setNext(new Node("&9"));
+        node = node.setNext(new Node("&5"));
+        node = node.setNext(new Node("&d"));
+        node.setNext(colors);
+
+        String s = "";
+        node = colors;
+        for (int i = 0; i < string.chars().count(); i++) {
+            String c = Character.toString(string.charAt(i));
+            s += node.getValue() + c;
+            node = node.next();
+        }
+        return s;
+    }
+
+    public String getLevelColor() {
+        int lvl = (int) get("network.level");
+        if (lvl > 10 && lvl < 20) {
+            return "&d";
+        } else if (lvl >= 20 && lvl <= 50) {
+            return "&2";
+        } else if (lvl >= 50 && lvl <= 100) {
+            return "&c";
+        } else if (lvl >= 100 && lvl <= 200) {
+            return "&b";
+        } else if (lvl >= 200 && lvl <= 300) {
+            return "&5";
+        } else if (lvl >= 300 && lvl <= 400) {
+            return "&e";
+        } else if (lvl >= 400 && lvl <= 500) {
+            return "&6";
+        } else if (lvl >= 500 && lvl < 1000) {
+            return "&3";
+        }
+        return "&7";
+    }
+
+    public String formatLevelTag(int lvl) {
+        String base = (String) get("network.prestigeIcon") + lvl;
+        if (lvl < 1000) {
+            return getLevelColor() + "[" + base + "]";
+        } else if (lvl >= 1000 && lvl < 10000) {
+            String out = "[" + lvl + "]";
+            if (lvl >= 1000 && lvl <= 1100) {
+                out = "&e" + out.charAt(0) +
+                        "&e" + out.charAt(0) +
+                        "&6" + out.charAt(1) +
+                        "&6" + out.charAt(1) +
+                        "&c" + out.charAt(1) +
+                        "&c" + out.charAt(1) +
+                        "&c" + out.charAt(1);
+            } else if (lvl >= 1100 && lvl <= 1200) {
+                out = "&5" + out.charAt(0) +
+                        "&d" + out.charAt(0) +
+                        "&5" + out.charAt(1) +
+                        "&d" + out.charAt(1) +
+                        "&5" + out.charAt(1) +
+                        "&d" + out.charAt(1) +
+                        "&5" + out.charAt(1);
+            } else {
+                out = "&3" + out;
+            }
+            return out;
+        } else if (lvl <= 10000) {
+            return toRainbow("[" + base + "]");
+        }
+        return "[" + lvl + "]";
+    }
+
+    public boolean checkPrestige() {
+        int level = (int) get("network.level");
+        if (level < 10000) {
+            double xp;
+            if (get("network.xp") instanceof Integer) {
+                xp = ((Integer) get("network.xp")).doubleValue();
+            } else {
+                xp = (double) get("network.xp");
+            }
+            int neededXp = level * (1000 / 5);
+            boolean reached = xp >= neededXp;
+
+            if (reached) {
+                set("network.level", level + 1);
+                set("network.xp", xp - neededXp);
+            }
+            getProfileManager().levelUp(this);
+            if (reached && xp > 0) {
+                checkPrestige();
+            }
+            return reached;
+        }
+        return false;
+    }
+
+    public double xpToNextLevel() {
+        int level = (int) get("network.level");
+        int neededXp = level * (1000 / 5);
+        return neededXp;
+    }
+
+    public void completeAchievement(String databaseName) {
+        Achievement achievement = Achievements.getAchievement(databaseName);
+        if (isAchievementUnlocked(databaseName)) {
+            return;
+        }
+        set("achievement." + databaseName, true);
+        getProfileManager().giveAchievementPoints(achievement.getAchievementPoints(), true, this);
+        getProfileManager().sendMessage("&a&kW&r&a>> Achievement Unlocked: &6" + achievement.getName() + " &a<<&kW", this);
+    }
+
+    public boolean isAchievementUnlocked(String databaseName) {
+        return Achievements.getAchievement(databaseName).isUnlocked(this);
+    }
+
+    public Guild getGuild() {
+        return GuildManager.getInstance().get((String) get("guild"));
     }
 
     public IProfileManager getProfileManager() {

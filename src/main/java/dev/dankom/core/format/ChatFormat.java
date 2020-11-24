@@ -12,7 +12,7 @@ public class ChatFormat {
     }
 
     public String format() {
-        String message = profile.getFullName() + "&f: " + msg;
+        String message = profile.getFullName() + "&f: " + getMsg();
         for (Emoji e : EmojiRepository.getEmojis()) {
             message = e.format(getProfile().player, message);
         }

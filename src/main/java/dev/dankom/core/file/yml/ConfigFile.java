@@ -7,6 +7,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,12 +37,12 @@ public class ConfigFile {
     }
 
     public void set(String key, Object value) {
-        dev.dankom.logger.Logger.log(LogLevel.INFO, dataConfig.toString());
+        dev.dankom.logger.Logger.log(LogLevel.INFO, getConfig().toString());
         this.dataConfig.set(key, value);
         this.saveConfig();
     }
 
-    private FileConfiguration getConfig() {
+    public FileConfiguration getConfig() {
         if (this.dataConfig == null)
             reloadConfig();
         return this.dataConfig;
@@ -59,12 +60,20 @@ public class ConfigFile {
         return getConfig().getBoolean(path);
     }
 
+    public List<String> getStringList(String path) {
+        return getConfig().getStringList(path);
+    }
+
+    public List<?> getList(String path) {
+        return getConfig().getList(path);
+    }
+
     public Object get(String path) {
         return getConfig().get(path);
     }
 
     public void saveConfig() {
-        logger.log(Level.INFO, "Config Saving!");
+//        logger.log(Level.INFO, "Config Saving!");
         if (this.dataConfig == null || this.configFile == null) {
             return;
         }
@@ -81,6 +90,7 @@ public class ConfigFile {
         }
 
         if (!this.configFile.exists()) {
+            dev.dankom.logger.Logger.log(LogLevel.INFO, "Saved Default Config!");
             this.resourceManager.saveResource(dataFolder, this.fileName, false);
         }
     }

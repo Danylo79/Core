@@ -7,19 +7,19 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-public class EcoCommand implements CommandExecutor {
+public class EcoCommands implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (command.getName().equalsIgnoreCase("eco")) {
             if (args.length > 0) {
                 Profile profile = new Profile(Bukkit.getPlayer(args[0]));
                 if (args[1].equalsIgnoreCase("coins")) {
-                    profile.getProfileManager().giveCoins(Integer.parseInt(args[3]), true, profile);
+                    profile.getProfileManager().giveCoins(Integer.parseInt(args[2]), true, profile);
                 } else {
-                    profile.getProfileManager().giveXp(Integer.parseInt(args[3]), true, profile);
+                    profile.getProfileManager().giveXp(Integer.parseInt(args[2]), true, profile);
                 }
             } else {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cNo eco type!"));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cInvalid Command: /eco [player] [ecoType] [amt]"));
             }
         }
         return false;

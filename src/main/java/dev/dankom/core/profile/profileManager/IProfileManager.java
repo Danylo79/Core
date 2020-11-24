@@ -5,7 +5,10 @@ import dev.dankom.core.rank.Rank;
 import dev.dankom.util.Actionbar;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
 
 public interface IProfileManager {
 
@@ -26,11 +29,11 @@ public interface IProfileManager {
     void setRank(Rank rank, Profile profile);
 
     default boolean inLobby(Profile profile) {
-        return (boolean) profile.database().get("network.lobby");
+        return (boolean) profile.get("network.lobby");
     }
 
     default void setInLobby(boolean b, Profile profile) {
-        profile.database().set("network.lobby", b);
+        profile.set("network.lobby", b);
     }
 
     default void toggleNicked(Profile profile) {
@@ -41,7 +44,7 @@ public interface IProfileManager {
         profile.set("nick.nicked", nicked);
     }
 
-    default void sentActionbar(String msg, Profile profile) {
+    default void sendActionbar(String msg, Profile profile) {
         new Actionbar(msg, profile.player).send();
     }
 
@@ -70,27 +73,80 @@ public interface IProfileManager {
     }
 
     default void giveCoins(int amt, boolean message, Profile profile) {
-        int coins = (int) profile.get("coins");
+        double coins;
+        if (profile.get("coins") instanceof Integer) {
+            coins = ((Integer) profile.get("coins")).doubleValue();
+        } else {
+            coins = (double) profile.get("coins");
+        }
         double rankMultiplier = profile.getRank().getMultiplier();
         double lvlMultiplier = getLevelMultiplier(profile);
         double add = coins + (amt * (rankMultiplier + lvlMultiplier));
+        String sAdd = String.format("%.2f", add);
         if (message) {
-            sentActionbar("&6+" + add + "(&b" + rankMultiplier + "&6x rank multiplier) (&b" + lvlMultiplier + "&6x level multiplier)", profile);
-            sendMessage("&6+" + add + "(&b" + rankMultiplier + "&6x rank multiplier) (&b" + lvlMultiplier + "&6x level multiplier)", profile);
+            sendActionbar("&6+" + sAdd + " (&b" + rankMultiplier + "&6x rank multiplier) (&b" + lvlMultiplier + "&6x level multiplier)", profile);
+            sendMessage("&6+" + sAdd + " (&b" + rankMultiplier + "&6x rank multiplier) (&b" + lvlMultiplier + "&6x level multiplier)", profile);
         }
         profile.set("coins", add);
+        checkCoinMaster(profile);
+    }
+
+    default void giveCoins(int amt, boolean message, String reason, Profile profile) {
+        double coins;
+        if (profile.get("coins") instanceof Integer) {
+            coins = ((Integer) profile.get("coins")).doubleValue();
+        } else {
+            coins = (double) profile.get("coins");
+        }
+        double rankMultiplier = profile.getRank().getMultiplier();
+        double lvlMultiplier = getLevelMultiplier(profile);
+        double add = coins + (amt * (rankMultiplier + lvlMultiplier));
+        String sAdd = String.format("%.2f", add);
+        if (message) {
+            sendActionbar("&6+" + sAdd + " (&b" + rankMultiplier + "&6x rank multiplier) (&b" + lvlMultiplier + "&6x level multiplier) (" + reason + ")", profile);
+            sendMessage("&6+" + sAdd + " (&b" + rankMultiplier + "&6x rank multiplier) (&b" + lvlMultiplier + "&6x level multiplier) (" + reason + ")", profile);
+        }
+        profile.set("coins", add);
+        checkCoinMaster(profile);
+    }
+
+    default void checkCoinMaster(Profile profile) {
+        double coins;
+        if (profile.get("coins") instanceof Integer) {
+            coins = ((Integer) profile.get("coins")).doubleValue();
+        } else {
+            coins = (double) profile.get("coins");
+        }
+        if (coins >= 1000) {
+            profile.completeAchievement("coin_master_I");
+        }
+
+        if (coins >= 10000) {
+            profile.completeAchievement("coin_master_II");
+        }
+
+        if (coins >= 100000) {
+            profile.completeAchievement("coin_master_III");
+        }
     }
 
     default void giveXp(int amt, boolean message, Profile profile) {
-        int xp = (int) profile.get("network.xp");
+        double xp;
+        if (profile.get("network.xp") instanceof Integer) {
+            xp = ((Integer) profile.get("network.xp")).doubleValue();
+        } else {
+            xp = (double) profile.get("network.xp");
+        }
         double rankMultiplier = profile.getRank().getMultiplier();
         double lvlMultiplier = getLevelMultiplier(profile);
         double add = xp + (amt * (rankMultiplier + lvlMultiplier));
+        String sAdd = String.format("%.2f", add);
         if (message) {
-            sentActionbar("&6+" + add + "(&b" + rankMultiplier + "&6x rank multiplier) (&b" + lvlMultiplier + "&6x level multiplier)", profile);
-            sendMessage("&6+" + add + "(&b" + rankMultiplier + "&6x rank multiplier) (&b" + lvlMultiplier + "&6x level multiplier)", profile);
+            sendActionbar("&3+" + sAdd + " (&b" + rankMultiplier + "&3x rank multiplier) (&b" + lvlMultiplier + "&3x level multiplier)", profile);
+            sendMessage("&3+" + sAdd + " (&b" + rankMultiplier + "&3x rank multiplier) (&b" + lvlMultiplier + "&3x level multiplier)", profile);
         }
         profile.set("network.xp", add);
+        profile.checkPrestige();
     }
 
     default double getLevelMultiplier(Profile profile) {
@@ -112,4 +168,34 @@ public interface IProfileManager {
     }
 
     String getChatFormat(String msg, Profile profile);
+
+    default ItemStack getHead(Profile profile) {
+        ItemStack item = new ItemStack(Material.SKULL_ITEM);
+        SkullMeta skullMeta = (SkullMeta) item.getItemMeta();
+        skullMeta.setOwner(profile.getName());
+        item.setItemMeta(skullMeta);
+        return item;
+    }
+
+    void levelUp(Profile profile);
+
+    default void giveAchievementPoints(int achievementPoints, boolean message, Profile profile){
+        String sAdd = String.format("%.2f", achievementPoints);
+        if (message) {
+            sendMessage("&9" + sAdd, profile);
+        }
+        profile.set("network.achievementPoints", achievementPoints);
+
+        if (achievementPoints >= 1000) {
+            profile.completeAchievement("achievements_I");
+        }
+
+        if (achievementPoints >= 10000) {
+            profile.completeAchievement("achievements_II");
+        }
+
+        if (achievementPoints >= 100000) {
+            profile.completeAchievement("achievements_III");
+        }
+    }
 }

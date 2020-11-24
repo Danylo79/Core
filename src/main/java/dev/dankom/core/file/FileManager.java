@@ -9,5 +9,8 @@ public class FileManager {
     public static Directory core = new Directory(root, "core");
     public static Directory database = new Directory(core, "database");
 
-    public static ConfigFile databaseFile = new ConfigFile("database.yml", database, plugin.getLogger(), plugin);
+    public ConfigFile databaseFile = new ConfigFile("database.yml", database, plugin.getLogger(), plugin);
+    public ConfigFile guildFile = new ConfigFile("guilds.yml", database, plugin.getLogger(), plugin);
+    public ConfigFile lobbyFile = new ConfigFile("lobbies.yml", database, plugin.getLogger(), plugin);
+    public ConfigFile partyFile = new ConfigFile("parties.yml", database, plugin.getLogger(), plugin);
 }

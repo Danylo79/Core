@@ -2,7 +2,7 @@ package dev.dankom.core.rank;
 
 public enum Rank {
 
-    NONE("NONE", "", "&8", 0),
+    NONE("NONE", "", "&7", 0),
     VIP("VIP", "&a[VIP]", "&a", 1, 1.5),
     VIP_PLUS("VIP+", "&a[VIP&6+&a]", "&a", 2, 2),
     MVP("MVP", "&b[MVP]", "&b", 3, 3.5),
@@ -11,7 +11,7 @@ public enum Rank {
     YOUTUBE("YOUTUBE", "&c[&fYOUTUBE&c]", "&c", 7, 10),
     ADMIN("ADMIN", "&c[ADMIN]", "&c", 8, 10),
     HELPER("HELPER", "&9[HELPER]", "&9", 9, 10),
-    OWNER("OWNER", "&c[OWNER]", "&c", 10, 10)
+    OWNER("OWNER", "&e[OWNER]", "&e", 10, 10)
     ;
 
     private String name;

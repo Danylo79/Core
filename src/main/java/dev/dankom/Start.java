@@ -3,6 +3,7 @@ package dev.dankom;
 import dev.dankom.core.Core;
 import dev.dankom.core.file.FileManager;
 import dev.dankom.core.file.IResourceManager;
+import dev.dankom.core.lobby.LobbyManager;
 import dev.dankom.core.module.Module;
 import dev.dankom.core.module.ModuleManager;
 import dev.dankom.logger.LogLevel;
@@ -10,28 +11,38 @@ import dev.dankom.logger.Logger;
 import dev.dankom.trigger.Trigger;
 import dev.dankom.trigger.TriggerManager;
 import dev.dankom.trigger.TriggerMethod;
+import dev.dankom.trigger.triggers.hdbLoadTrigger;
+import me.arcaniax.hdb.api.DatabaseLoadEvent;
+import me.arcaniax.hdb.api.HeadDatabaseAPI;
 import org.bukkit.Bukkit;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.*;
 
-public class Start extends JavaPlugin implements IResourceManager {
+public class Start extends JavaPlugin implements IResourceManager, Listener {
 
-    private ModuleManager moduleManager;
-    private TriggerManager triggerManager;
+    public ModuleManager moduleManager;
+    public TriggerManager triggerManager;
+    public FileManager fileManager;
+    public LobbyManager lobbyManager;
     public static String v = null;
 
     @Override
     public void onEnable() {
         this.moduleManager = new ModuleManager();
         this.triggerManager = new TriggerManager();
-        new FileManager();
+        this.fileManager = new FileManager();
+        this.lobbyManager = new LobbyManager();
 
         this.v = Bukkit.getServer().getClass().getPackage().getName();
         this.v = v.substring(v.lastIndexOf(".") + 1);
 
         moduleManager.registerModule(new Core());
+
         triggerManager.register(this);
+        getServer().getPluginManager().registerEvents(this, this);
 
         for (Module m : moduleManager.getModules()) {
             Logger.log(LogLevel.INFO, "Activating " + m.getName() + " module!");
@@ -48,7 +59,12 @@ public class Start extends JavaPlugin implements IResourceManager {
             Logger.log(LogLevel.INFO, "Deactivating " + m.getName() + " module!");
         }
 
-        new Trigger("startup");
+        new Trigger("shutdown");
+    }
+
+    @EventHandler
+    public void onDatabaseLoad(DatabaseLoadEvent e) {
+        new hdbLoadTrigger(new HeadDatabaseAPI());
     }
 
     public static Start getInstance() {
@@ -95,4 +111,9 @@ public class Start extends JavaPlugin implements IResourceManager {
     public TriggerManager getTriggerManager() {
         return triggerManager;
     }
+
+    public FileManager getFileManager() {
+        return fileManager;
+    }
+
 }
