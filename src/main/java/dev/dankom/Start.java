@@ -7,11 +7,12 @@ import dev.dankom.core.file.IResourceManager;
 import dev.dankom.core.lobby.LobbyManager;
 import dev.dankom.core.module.Module;
 import dev.dankom.core.module.ModuleManager;
+import dev.dankom.game.core.GameCore;
+import dev.dankom.game.core.GameManager;
 import dev.dankom.logger.LogLevel;
 import dev.dankom.logger.Logger;
 import dev.dankom.trigger.Trigger;
 import dev.dankom.trigger.TriggerManager;
-import dev.dankom.trigger.TriggerMethod;
 import dev.dankom.trigger.triggers.hdbLoadTrigger;
 import me.arcaniax.hdb.api.DatabaseLoadEvent;
 import me.arcaniax.hdb.api.HeadDatabaseAPI;
@@ -29,6 +30,7 @@ public class Start extends JavaPlugin implements IResourceManager, Listener {
     public FileManager fileManager;
     public LobbyManager lobbyManager;
     public CosmeticManager cosmeticManager;
+    public GameManager gameManager;
     public static String v = null;
 
     @Override
@@ -38,14 +40,17 @@ public class Start extends JavaPlugin implements IResourceManager, Listener {
         this.fileManager = new FileManager();
         this.lobbyManager = new LobbyManager();
         this.cosmeticManager = new CosmeticManager();
+        this.gameManager = new GameManager();
 
         this.v = Bukkit.getServer().getClass().getPackage().getName();
         this.v = v.substring(v.lastIndexOf(".") + 1);
 
         moduleManager.registerModule(new Core());
+        moduleManager.registerModule(new GameCore());
 
         triggerManager.register(this);
         getServer().getPluginManager().registerEvents(this, this);
+        getServer().getPluginManager().registerEvents(gameManager, this);
 
         for (Module m : moduleManager.getModules()) {
             Logger.log(LogLevel.INFO, "Activating " + m.getName() + " module!");
