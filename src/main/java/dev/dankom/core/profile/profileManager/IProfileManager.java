@@ -180,11 +180,10 @@ public interface IProfileManager {
     void levelUp(Profile profile);
 
     default void giveAchievementPoints(int achievementPoints, boolean message, Profile profile){
-        String sAdd = String.format("%.2f", achievementPoints);
         if (message) {
-            sendMessage("&9" + sAdd, profile);
+            sendMessage("&9" + achievementPoints, profile);
         }
-        profile.set("network.achievementPoints", achievementPoints);
+        profile.set("network.achievementPoints", (int) profile.get("network.achievementPoints") + achievementPoints);
 
         if (achievementPoints >= 1000) {
             profile.completeAchievement("achievements_I");

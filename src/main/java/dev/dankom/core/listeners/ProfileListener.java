@@ -26,5 +26,6 @@ public class ProfileListener implements Listener {
     public void onChat(AsyncPlayerChatEvent e) {
         Profile profile = new Profile(e.getPlayer());
         e.setFormat(profile.getLevelTag() + " " + profile.getProfileManager().getChatFormat(e.getMessage(), profile));
+        profile.completeAchievement("chat");
     }
 }

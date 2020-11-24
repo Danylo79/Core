@@ -83,6 +83,11 @@ public class ProfileMenu extends Menu {
         );
         inventory.setItem(22, item);
 
+        item = new ItemHelper(Material.EMERALD, 1);
+        item.setDisplayName("&aCosmetics");
+        item.setLore("&7Spice up your game with", "&7these unlockable cosmetics");
+        inventory.setItem(23, item);
+
         return inventory;
     }
 
@@ -101,6 +106,8 @@ public class ProfileMenu extends Menu {
                 MenuManager.prestigeMenu.openInv(player);
             } else if (slot == 21) {
                 MenuManager.achievementsMenu.openInv(player);
+            } else if (slot == 23) {
+                MenuManager.cosmeticMenu.openInv(player);
             }
         } catch (IndexOutOfBoundsException e) {
             return;
@@ -117,7 +124,9 @@ public class ProfileMenu extends Menu {
         ItemHelper item = new ItemHelper(new HeadDatabaseAPI().getItemHead("38386"));
         item.setDisplayName(profile.getFullName());
         item.setSkullOwner(profile.getName());
-        item.setLore("&7Level:&6 " + (int) profile.get("network.level"),
+        item.setLore(
+                "&7Level:&6 " + (int) profile.get("network.level"),
+                "&7Achievement Points:&e " + (int) profile.get("network.achievementPoints"),
                 "&7Guild:&b " + profile.getGuild().getName(),
                 " ",
                 "&7Online Status: " + (profile.player.isOnline() ? "&aOnline" : "&cOffline"));

@@ -9,8 +9,12 @@ public class SimpleProfileManager implements IProfileManager {
     @Override
     public void refreshPlayer(Profile profile) {
         profile.update();
-        showOtherPlayers(profile);
-        profile.player.setFlying(false);
+        try {
+            showOtherPlayers(profile);
+            profile.player.setAllowFlight(false);
+        } catch (IllegalStateException e) {
+            return;
+        }
     }
 
     @Override

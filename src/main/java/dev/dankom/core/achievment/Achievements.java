@@ -17,6 +17,7 @@ public class Achievements {
         achievements.add(new Achievement("Achievements!?", "achievements_I", Material.REDSTONE, 1000, "&3+1000 Achievement Points"));
         achievements.add(new Achievement("Achievements!?!?", "achievements_II", Material.REDSTONE, 5000, "&3+5000 Achievement Points"));
         achievements.add(new Achievement("Achievements!?!?!?", "achievements_III", Material.REDSTONE, 10000, "&3+10000 Achievement Points"));
+        achievements.add(new Achievement("Let the world hear your voice!", "chat", Material.SIGN, 100, "&3+100 Achievement Points"));
         return achievements;
     }
 

@@ -3,6 +3,7 @@ package dev.dankom.core.profile;
 import dev.dankom.Start;
 import dev.dankom.core.achievment.Achievement;
 import dev.dankom.core.achievment.Achievements;
+import dev.dankom.core.cosmetics.CosmeticType;
 import dev.dankom.core.file.yml.ConfigFile;
 import dev.dankom.core.guild.Guild;
 import dev.dankom.core.guild.GuildManager;
@@ -40,6 +41,7 @@ public class Profile {
         addData("coins", 0);
         addData("guild", "");
         addData("friends", new ArrayList<String>());
+        addData("inbox", "");
         //Network Data
         addData("network.level", 1);
         addData("network.xp", 0);
@@ -56,6 +58,10 @@ public class Profile {
         //Achievements
         for (Achievement a : Achievements.getAchievements()) {
             addData("achievement." + a.getDatabaseName(), false);
+        }
+        //Cosmetics
+        for (CosmeticType c : CosmeticType.values()) {
+            addData("cosmetic." + c.name(), "");
         }
     }
 
@@ -165,7 +171,7 @@ public class Profile {
     }
 
     public String formatLevelTag(int lvl) {
-        String base = (String) get("network.prestigeIcon") + lvl;
+        String base = lvl + (String) get("network.prestigeIcon");
         if (lvl < 1000) {
             return getLevelColor() + "[" + base + "]";
         } else if (lvl >= 1000 && lvl < 10000) {
@@ -205,16 +211,15 @@ public class Profile {
             } else {
                 xp = (double) get("network.xp");
             }
-            int neededXp = level * (1000 / 5);
-            boolean reached = xp >= neededXp;
+            boolean reached = xp >= xpToNextLevel();
 
             if (reached) {
                 set("network.level", level + 1);
-                set("network.xp", xp - neededXp);
-            }
-            getProfileManager().levelUp(this);
-            if (reached && xp > 0) {
-                checkPrestige();
+                set("network.xp", xp - xpToNextLevel());
+                getProfileManager().levelUp(this);
+                if (xp > 0) {
+                    checkPrestige();
+                }
             }
             return reached;
         }

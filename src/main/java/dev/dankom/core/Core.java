@@ -23,6 +23,7 @@ public final class Core extends Module {
 
         registerListener(new ProfileListener());
         registerListener(Start.getInstance().lobbyManager);
+        registerListener(Start.getInstance().cosmeticManager);
 
         setCommandExecutor("setRank", new RankCommands());
         setCommandExecutor("rank", new RankCommands());

@@ -1,9 +1,9 @@
-package dev.dankom.core.menu.menus;
+package dev.dankom.core.menu.menus.cosmetic;
 
+import dev.dankom.core.achievment.Achievement;
+import dev.dankom.core.achievment.Achievements;
 import dev.dankom.core.menu.Menu;
 import dev.dankom.core.menu.MenuManager;
-import dev.dankom.core.prestige.PrestigeIcon;
-import dev.dankom.core.prestige.PrestigeIcons;
 import dev.dankom.core.profile.Profile;
 import dev.dankom.util.ItemHelper;
 import dev.dankom.util.ListHelper;
@@ -11,13 +11,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class GuildMenu extends Menu {
-    public GuildMenu() {
-        super("&cGuild Menu", false, 54);
+import java.util.List;
+
+public class CosmeticMenu extends Menu {
+    public CosmeticMenu() {
+        super("&6Cosmetics", false, 54);
     }
 
     @Override
@@ -33,18 +34,28 @@ public class GuildMenu extends Menu {
         }
 
         ItemHelper item = new ItemHelper(Material.BARRIER, 1);
-        ItemMeta meta = item.getMeta();
-        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&cExit"));
-        item.setItemMeta(meta);
+        item.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&cExit"));
         inventory.setItem(49, item);
 
         item = new ItemHelper(Material.ARROW, 1);
-        meta = item.getMeta();
-        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&cBack"));
-        item.setItemMeta(meta);
+        item.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&cBack"));
         inventory.setItem(45, item);
 
-        addPlayers(profile);
+        item = new ItemHelper(Material.SIGN, 1);
+        item.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&aKill Messages"));
+        inventory.setItem(10, item);
+
+        item = new ItemHelper(Material.ARROW, 1);
+        item.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&aProjectile Trails"));
+        inventory.setItem(12, item);
+
+        item = new ItemHelper(Material.DIAMOND_SWORD, 1);
+        item.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&aKill Messages"));
+        inventory.setItem(14, item);
+
+        item = new ItemHelper(Material.STRING, 1);
+        item.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&aClick Effects"));
+        inventory.setItem(16, item);
 
         return inventory;
     }
@@ -53,12 +64,6 @@ public class GuildMenu extends Menu {
     public void openInv(Profile profile) {
         createInv(profile);
         super.openInv(profile);
-    }
-
-    public void addPlayers(Profile profile) {
-        for (int i = 0; i < inventory.getSize(); i++) {
-
-        }
     }
 
     @Override

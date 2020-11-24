@@ -1,6 +1,7 @@
 package dev.dankom;
 
 import dev.dankom.core.Core;
+import dev.dankom.core.cosmetics.CosmeticManager;
 import dev.dankom.core.file.FileManager;
 import dev.dankom.core.file.IResourceManager;
 import dev.dankom.core.lobby.LobbyManager;
@@ -27,6 +28,7 @@ public class Start extends JavaPlugin implements IResourceManager, Listener {
     public TriggerManager triggerManager;
     public FileManager fileManager;
     public LobbyManager lobbyManager;
+    public CosmeticManager cosmeticManager;
     public static String v = null;
 
     @Override
@@ -35,6 +37,7 @@ public class Start extends JavaPlugin implements IResourceManager, Listener {
         this.triggerManager = new TriggerManager();
         this.fileManager = new FileManager();
         this.lobbyManager = new LobbyManager();
+        this.cosmeticManager = new CosmeticManager();
 
         this.v = Bukkit.getServer().getClass().getPackage().getName();
         this.v = v.substring(v.lastIndexOf(".") + 1);

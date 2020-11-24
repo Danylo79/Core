@@ -4,6 +4,7 @@ import dev.dankom.Start;
 import dev.dankom.core.menu.menus.AchievementsMenu;
 import dev.dankom.core.menu.menus.PrestigeMenu;
 import dev.dankom.core.menu.menus.ProfileMenu;
+import dev.dankom.core.menu.menus.cosmetic.CosmeticMenu;
 import dev.dankom.core.profile.Profile;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -21,12 +22,14 @@ public class MenuManager implements Listener {
     public static PrestigeMenu prestigeMenu = new PrestigeMenu();
     public static ProfileMenu profileMenu = new ProfileMenu();
     public static AchievementsMenu achievementsMenu = new AchievementsMenu();
+    public static CosmeticMenu cosmeticMenu = new CosmeticMenu();
     public static List<Menu> menus = new ArrayList<>();
 
     public MenuManager() {
         menus.add(prestigeMenu);
         menus.add(profileMenu);
         menus.add(achievementsMenu);
+        menus.add(cosmeticMenu);
 
         Bukkit.getPluginManager().registerEvents(this, Start.getInstance());
     }
