@@ -28,9 +28,15 @@ public class LobbyCommands implements CommandExecutor {
                         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aSet lobby spawn to (x: " + profile.player.getLocation().getX() + " y: " + profile.player.getLocation().getY() + " z: " + profile.player.getLocation().getZ() + ")"));
                     }
                 } else if (args[0].equalsIgnoreCase("fly")) {
-                    profile.set("lobby.fly", !(boolean) profile.get("lobby.fly"));
+                    if (profile.getRank().getId() > 1) {
+                        profile.set("lobby.fly", !(boolean) profile.get("lobby.fly"));
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aToggled Fly!"));
+                    } else {
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cYou do not have the permission to do that!"));
+                    }
                 } else if (args[0].equalsIgnoreCase("hide")) {
                     profile.set("lobby.hidePlayers", !(boolean) profile.get("lobby.hidePlayers"));
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aYou can now " + ((boolean) profile.get("lobby.hidePlayers") ? "&cnot &asee players!" : "see players!")));
                 }
                 profile.getProfileManager().refreshPlayer(Start.getInstance().lobbyManager.isInLobby(profile), profile);
             } else {

@@ -47,6 +47,7 @@ public class LobbyManager implements Listener {
             profile.player.teleport(new Location(profile.player.getWorld(), (double) database().get("x"), (double) database().get("y"), (double) database().get("z")));
             profile.player.setGameMode(GameMode.SURVIVAL);
             profile.player.getInventory().clear();
+            profile.player.setLevel((int) profile.get("network.level"));
         } else {
             profile.set("network.lobby", false);
         }
@@ -56,12 +57,24 @@ public class LobbyManager implements Listener {
 
     public void addLobbyItems(Profile profile) {
         try {
+            ItemHelper first = new ItemHelper(Material.COMPASS, 1);
+            first.setDisplayName("&aGame Selector &7(Right Click)");
+            profile.player.getInventory().setItem(0, first);
+
+            ItemHelper third = new ItemHelper(Material.EMERALD, 1);
+            third.setDisplayName("&aShop &7(Right Click)");
+            profile.player.getInventory().setItem(2, third);
+
+            ItemHelper fifth = new ItemHelper(Material.CHEST, 1);
+            fifth.setDisplayName("&aCollectibles &7(Right Click)");
+            profile.player.getInventory().setItem(4, fifth);
+
             ItemHelper second = new ItemHelper(new HeadDatabaseAPI().getItemHead("38386"));
             second.setDisplayName("&aProfile &7(Right Click)");
             second.setSkullOwner(profile.getName());
             profile.player.getInventory().setItem(1, second);
-        } catch (Exception e) {
-            addLobbyItems(profile);
+        } catch (IllegalStateException e) {
+            return;
         }
     }
 

@@ -2,22 +2,18 @@ package dev.dankom.core.menu.menus;
 
 import dev.dankom.core.menu.Menu;
 import dev.dankom.core.menu.MenuManager;
-import dev.dankom.core.prestige.PrestigeIcon;
-import dev.dankom.core.prestige.PrestigeIcons;
 import dev.dankom.core.profile.Profile;
 import dev.dankom.util.ItemHelper;
-import dev.dankom.util.ListHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class GuildMenu extends Menu {
-    public GuildMenu() {
-        super("&cGuild Menu", false, 54);
+public class LobbySettingsMenu extends Menu {
+    public LobbySettingsMenu() {
+        super("&aLobby Settings", false, 54);
     }
 
     @Override
@@ -44,7 +40,17 @@ public class GuildMenu extends Menu {
         item.setItemMeta(meta);
         inventory.setItem(45, item);
 
-        addPlayers(profile);
+        item = new ItemHelper(Material.FEATHER, 1);
+        meta = item.getMeta();
+        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&aFly"));
+        item.setItemMeta(meta);
+        inventory.setItem(21, item);
+
+        item = new ItemHelper(Material.STRING, 1);
+        meta = item.getMeta();
+        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&aHide/Show Players"));
+        item.setItemMeta(meta);
+        inventory.setItem(23, item);
 
         return inventory;
     }
@@ -55,12 +61,6 @@ public class GuildMenu extends Menu {
         super.openInv(profile);
     }
 
-    public void addPlayers(Profile profile) {
-        for (int i = 0; i < inventory.getSize(); i++) {
-
-        }
-    }
-
     @Override
     public void onClick(Profile player, int slot) {
         try {
@@ -68,6 +68,10 @@ public class GuildMenu extends Menu {
                 player.player.closeInventory();
             } else if (slot == 45) {
                 MenuManager.profileMenu.openInv(player);
+            } else if (slot == 21) {
+                player.player.chat("/lobby fly");
+            } else if (slot == 23) {
+                player.player.chat("/lobby hide");
             }
         } catch (IndexOutOfBoundsException e) {
             return;

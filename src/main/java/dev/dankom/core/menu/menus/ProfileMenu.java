@@ -45,11 +45,7 @@ public class ProfileMenu extends Menu {
         item.setItemMeta(meta);
         inventory.setItem(49, item);
 
-        inventory.setItem(2, profileHead);
-        inventory.setItem(3, friendsHead);
-        inventory.setItem(4, partyHead);
-        inventory.setItem(5, guildHead);
-        inventory.setItem(6, recentHead);
+        inventory.setItem(4, profileHead);
 
         item = new ItemHelper(Material.STAINED_GLASS_PANE, 1, DyeColor.ORANGE);
         meta = item.getMeta();
@@ -67,10 +63,12 @@ public class ProfileMenu extends Menu {
 
         item = new ItemHelper(Material.FLOWER_POT_ITEM, 1);
         item.setDisplayName("&aLevel Icons");
+        item.setLore("&7Show everyone your", "&7achievements by", "&7having a custom icon", "&7next to your level!");
         inventory.setItem(20, item);
 
-        item = new ItemHelper(Material.BREWING_STAND_ITEM, 1);
+        item = new ItemHelper(Material.DIAMOND, 1);
         item.setDisplayName("&aAchievements");
+        item.setLore("&7Check out your ", "&7progress on achievements!");
         inventory.setItem(21, item);
 
         item = new ItemHelper(profileHead);
@@ -87,6 +85,11 @@ public class ProfileMenu extends Menu {
         item.setDisplayName("&aCosmetics");
         item.setLore("&7Spice up your game with", "&7these unlockable cosmetics");
         inventory.setItem(23, item);
+
+        item = new ItemHelper(Material.REDSTONE_COMPARATOR, 1);
+        item.setDisplayName("&aLobby Settings");
+        item.setLore("&7Change your lobby experience");
+        inventory.setItem(24, item);
 
         return inventory;
     }
@@ -108,6 +111,8 @@ public class ProfileMenu extends Menu {
                 MenuManager.achievementsMenu.openInv(player);
             } else if (slot == 23) {
                 MenuManager.cosmeticMenu.openInv(player);
+            } else if (slot == 24) {
+                MenuManager.lobbySettingsMenu.openInv(player);
             }
         } catch (IndexOutOfBoundsException e) {
             return;

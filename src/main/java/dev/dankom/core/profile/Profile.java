@@ -10,11 +10,13 @@ import dev.dankom.core.guild.GuildManager;
 import dev.dankom.core.profile.profileManager.IProfileManager;
 import dev.dankom.core.profile.profileManager.SimpleProfileManager;
 import dev.dankom.core.rank.Rank;
+import dev.dankom.util.Percentage;
 import dev.dankom.util.linkedlist.Node;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+import javax.print.DocFlavor;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -61,7 +63,7 @@ public class Profile {
         }
         //Cosmetics
         for (CosmeticType c : CosmeticType.values()) {
-            addData("cosmetic." + c.name(), "");
+            addData("cosmetic." + c.getDatabaseName(), "");
         }
     }
 

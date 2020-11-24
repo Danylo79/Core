@@ -33,6 +33,7 @@ public final class Core extends Module {
         setCommandExecutor("g", new GuildCommands());
         setCommandExecutor("prestige", new PrestigeCommands());
         setCommandExecutor("lobby", new LobbyCommands());
+        setCommandExecutor("profile", new ProfileViewCommands());
     }
 
     @Override

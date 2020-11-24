@@ -4,6 +4,9 @@ import dev.dankom.core.profile.Profile;
 import dev.dankom.util.linkedlist.Node;
 import net.md_5.bungee.api.ChatColor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Guild {
     private final Profile owner;
     private final int playerCount;
@@ -121,5 +124,17 @@ public class Guild {
             return reached;
         }
         return false;
+    }
+
+    private List<String> getGuildPlayers() {
+        return GuildManager.getInstance().database().getStringList(getName() + ".players");
+    }
+
+    public List<Profile> getPlayers() {
+        List<Profile> profiles = new ArrayList<>();
+        for (String s : getGuildPlayers()) {
+            profiles.add(new Profile(s));
+        }
+        return profiles;
     }
 }

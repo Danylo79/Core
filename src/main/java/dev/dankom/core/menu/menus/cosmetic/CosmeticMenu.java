@@ -50,7 +50,7 @@ public class CosmeticMenu extends Menu {
         inventory.setItem(12, item);
 
         item = new ItemHelper(Material.DIAMOND_SWORD, 1);
-        item.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&aKill Messages"));
+        item.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&aKill Effects"));
         inventory.setItem(14, item);
 
         item = new ItemHelper(Material.STRING, 1);
@@ -73,6 +73,14 @@ public class CosmeticMenu extends Menu {
                 player.player.closeInventory();
             } else if (slot == 45) {
                 MenuManager.profileMenu.openInv(player);
+            } else if (slot == 10) {
+                MenuManager.killMessagesMenu.openInv(player);
+            } else if (slot == 12) {
+                MenuManager.projectileTrailMenu.openInv(player);
+            } else if (slot == 14) {
+                MenuManager.killEffectMenu.openInv(player);
+            } else if (slot == 16) {
+                MenuManager.clickEffectMenu.openInv(player);
             }
         } catch (IndexOutOfBoundsException e) {
             return;

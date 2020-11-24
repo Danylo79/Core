@@ -1,10 +1,9 @@
 package dev.dankom.core.menu;
 
 import dev.dankom.Start;
-import dev.dankom.core.menu.menus.AchievementsMenu;
-import dev.dankom.core.menu.menus.PrestigeMenu;
-import dev.dankom.core.menu.menus.ProfileMenu;
-import dev.dankom.core.menu.menus.cosmetic.CosmeticMenu;
+import dev.dankom.core.guild.GuildManager;
+import dev.dankom.core.menu.menus.*;
+import dev.dankom.core.menu.menus.cosmetic.*;
 import dev.dankom.core.profile.Profile;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -22,7 +21,14 @@ public class MenuManager implements Listener {
     public static PrestigeMenu prestigeMenu = new PrestigeMenu();
     public static ProfileMenu profileMenu = new ProfileMenu();
     public static AchievementsMenu achievementsMenu = new AchievementsMenu();
+    public static LobbySettingsMenu lobbySettingsMenu = new LobbySettingsMenu();
     public static CosmeticMenu cosmeticMenu = new CosmeticMenu();
+    //Effect Menus
+    public static KillMessageMenu killMessagesMenu = new KillMessageMenu();
+    public static ProjectileTrailMenu projectileTrailMenu = new ProjectileTrailMenu();
+    public static KillEffectMenu killEffectMenu = new KillEffectMenu();
+    public static ClickEffectMenu clickEffectMenu = new ClickEffectMenu();
+    public static ProfileViewer profileViewerMenu = new ProfileViewer();
     public static List<Menu> menus = new ArrayList<>();
 
     public MenuManager() {
@@ -30,6 +36,12 @@ public class MenuManager implements Listener {
         menus.add(profileMenu);
         menus.add(achievementsMenu);
         menus.add(cosmeticMenu);
+        menus.add(killMessagesMenu);
+        menus.add(projectileTrailMenu);
+        menus.add(clickEffectMenu);
+        menus.add(killEffectMenu);
+        menus.add(lobbySettingsMenu);
+        menus.add(profileViewerMenu);
 
         Bukkit.getPluginManager().registerEvents(this, Start.getInstance());
     }

@@ -32,7 +32,7 @@ public class Cosmetic {
     }
 
     public boolean isActivated(Profile profile) {
-        return false;
+        return ((String) profile.get("cosmetic." + getCosmeticType().getDatabaseName())).equalsIgnoreCase(getDatabaseName());
     }
 
     public String getDesc() {

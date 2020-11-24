@@ -1,6 +1,10 @@
 package dev.dankom.core.cosmetics;
 
+import dev.dankom.core.cosmetics.cosmetics.MemedKillMessage;
+import dev.dankom.core.cosmetics.cosmetics.WildWestKillMessage;
 import dev.dankom.core.profile.Profile;
+import dev.dankom.logger.LogLevel;
+import dev.dankom.logger.Logger;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -17,11 +21,21 @@ public class CosmeticManager implements Listener {
     private static List<Cosmetic> cosmetics = new ArrayList<>();
 
     public static List<Cosmetic> getCosmetics() {
+        addCosmetics();
+        return cosmetics;
+    }
+
+    private static void addCosmetics() {
         cosmetics.clear();
         //Add Cosmetics Here
-
+        cosmetics.add(new MemedKillMessage() {
+            @Override
+            public boolean isUnlocked(Profile profile) {
+                return (int) profile.get("network.level") >= 1000;
+            }
+        });
+        cosmetics.add(new WildWestKillMessage());
         //
-        return cosmetics;
     }
 
     @EventHandler
@@ -57,5 +71,18 @@ public class CosmeticManager implements Listener {
                 c.onKill(e);
             }
         }
+    }
+
+    public static List<Cosmetic> getCosmetics(CosmeticType cosmeticType) {
+        addCosmetics();
+        List<Cosmetic> out = new ArrayList<>();
+        for (Cosmetic c : cosmetics) {
+            if (c.getCosmeticType().getDatabaseName().equalsIgnoreCase(cosmeticType.getDatabaseName())) {
+                out.add(c);
+            } else {
+                continue;
+            }
+        }
+        return out;
     }
 }
