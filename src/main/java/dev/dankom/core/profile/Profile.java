@@ -10,6 +10,7 @@ import dev.dankom.core.guild.GuildManager;
 import dev.dankom.core.profile.profileManager.IProfileManager;
 import dev.dankom.core.profile.profileManager.SimpleProfileManager;
 import dev.dankom.core.rank.Rank;
+import dev.dankom.util.ColorUtil;
 import dev.dankom.util.Percentage;
 import dev.dankom.util.linkedlist.Node;
 import org.bukkit.Bukkit;
@@ -130,26 +131,6 @@ public class Profile {
         return ChatColor.translateAlternateColorCodes('&', formatLevelTag(lvl));
     }
 
-    public String toRainbow(String string) {
-        Node colors = new Node("&c");
-        Node node = colors.setNext(new Node("&6"));
-        node = node.setNext(new Node("&e"));
-        node = node.setNext(new Node("&a"));
-        node = node.setNext(new Node("&9"));
-        node = node.setNext(new Node("&5"));
-        node = node.setNext(new Node("&d"));
-        node.setNext(colors);
-
-        String s = "";
-        node = colors;
-        for (int i = 0; i < string.chars().count(); i++) {
-            String c = Character.toString(string.charAt(i));
-            s += node.getValue() + c;
-            node = node.next();
-        }
-        return s;
-    }
-
     public String getLevelColor() {
         int lvl = (int) get("network.level");
         if (lvl > 10 && lvl < 20) {
@@ -199,7 +180,7 @@ public class Profile {
             }
             return out;
         } else if (lvl <= 10000) {
-            return toRainbow("[" + base + "]");
+            return ColorUtil.toRainbow("[" + base + "]");
         }
         return "[" + lvl + "]";
     }

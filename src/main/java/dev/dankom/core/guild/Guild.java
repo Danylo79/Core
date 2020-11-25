@@ -1,6 +1,7 @@
 package dev.dankom.core.guild;
 
 import dev.dankom.core.profile.Profile;
+import dev.dankom.util.ColorUtil;
 import dev.dankom.util.linkedlist.Node;
 import net.md_5.bungee.api.ChatColor;
 
@@ -40,28 +41,8 @@ public class Guild {
         if (getLvl() < 1000) {
             return ChatColor.translateAlternateColorCodes('&', getTagColor() + getTag());
         } else {
-            return ChatColor.translateAlternateColorCodes('&', toRainbow(getTag()));
+            return ChatColor.translateAlternateColorCodes('&', ColorUtil.toRainbow(getTag()));
         }
-    }
-
-    public String toRainbow(String string) {
-        Node colors = new Node("&c");
-        Node node = colors.setNext(new Node("&6"));
-        node = node.setNext(new Node("&e"));
-        node = node.setNext(new Node("&a"));
-        node = node.setNext(new Node("&9"));
-        node = node.setNext(new Node("&5"));
-        node = node.setNext(new Node("&d"));
-        node.setNext(colors);
-
-        String s = "";
-        node = colors;
-        for (int i = 0; i < string.chars().count(); i++) {
-            String c = Character.toString(string.charAt(i));
-            s += node.getValue() + c;
-            node = node.next();
-        }
-        return s;
     }
 
     public int getLvl() {
