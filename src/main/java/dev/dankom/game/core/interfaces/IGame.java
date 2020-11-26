@@ -1,6 +1,10 @@
 package dev.dankom.game.core.interfaces;
 
+import dev.dankom.game.core.interfaces.util.ISpawnpoint;
 import dev.dankom.trigger.Trigger;
+import me.arcaniax.hdb.api.HeadDatabaseAPI;
+import me.clip.placeholderapi.PlaceholderAPI;
+import org.bukkit.Location;
 import org.bukkit.event.Event;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -15,10 +19,25 @@ public interface IGame {
     default void generateRandomId() {
         getSession().setId(UUID.randomUUID());
     }
+    default Location getSpawn(int id) {
+        for (ISpawnpoint sp : getSession().getMap().getSpawnpoints()) {
+            if (sp.getNumber() == id) {
+                return sp.getSpawn();
+            } else {
+                continue;
+            }
+        }
+        return null;
+    }
 
     //Game Hooks
     default void onStart() {}
     default void onFinish() {}
+
+    //API Hooks
+    default HeadDatabaseAPI getHDB() {
+        return new HeadDatabaseAPI();
+    }
 
     //Event Hooks
     default void onDeath(PlayerDeathEvent e) {}

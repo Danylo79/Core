@@ -11,6 +11,7 @@ import dev.dankom.game.core.GameCore;
 import dev.dankom.game.core.GameManager;
 import dev.dankom.logger.LogLevel;
 import dev.dankom.logger.Logger;
+import dev.dankom.papi.papiHook;
 import dev.dankom.trigger.Trigger;
 import dev.dankom.trigger.TriggerManager;
 import dev.dankom.trigger.triggers.hdbLoadTrigger;
@@ -47,6 +48,7 @@ public class Start extends JavaPlugin implements IResourceManager, Listener {
 
         moduleManager.registerModule(new Core());
         moduleManager.registerModule(new GameCore());
+        moduleManager.registerModule(new papiHook());
 
         triggerManager.register(this);
         getServer().getPluginManager().registerEvents(this, this);

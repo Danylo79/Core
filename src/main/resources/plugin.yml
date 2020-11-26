@@ -4,6 +4,7 @@ main: dev.dankom.Start
 depend:
   - HeadDatabase
   - ProtocolLib
+  - PlaceholderAPI
 commands:
   setRank:
   rank:
