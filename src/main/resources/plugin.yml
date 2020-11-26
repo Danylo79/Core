@@ -15,3 +15,7 @@ commands:
   prestige:
   lobby:
   profile:
+  f:
+  friend:
+  whisper:
+  msg:

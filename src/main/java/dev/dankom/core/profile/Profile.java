@@ -7,6 +7,7 @@ import dev.dankom.core.cosmetics.CosmeticType;
 import dev.dankom.core.file.yml.ConfigFile;
 import dev.dankom.core.guild.Guild;
 import dev.dankom.core.guild.GuildManager;
+import dev.dankom.core.inbox.Inbox;
 import dev.dankom.core.profile.profileManager.IProfileManager;
 import dev.dankom.core.profile.profileManager.SimpleProfileManager;
 import dev.dankom.core.rank.Rank;
@@ -16,6 +17,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class Profile {
@@ -66,7 +68,6 @@ public class Profile {
     }
 
     public void update() {
-        player.setDisplayName(getFullName());
         player.setPlayerListName(getFullName());
     }
 
@@ -232,5 +233,17 @@ public class Profile {
 
     public IProfileManager getProfileManager() {
         return new SimpleProfileManager();
+    }
+
+    public Inbox getInbox() {
+        return new Inbox(this);
+    }
+
+    public List<Profile> getFriends() {
+        List<Profile> friends = new ArrayList<>();
+        for (String s : database().getStringList("profiles." + player.getUniqueId().toString() + ".friends")) {
+            friends.add(new Profile(s));
+        }
+        return friends;
     }
 }

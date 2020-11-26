@@ -26,13 +26,25 @@ public final class Core extends Module {
 
         setCommandExecutor("setRank", new RankCommands());
         setCommandExecutor("rank", new RankCommands());
+
         setCommandExecutor("cosmetics", new CosmeticCommands());
+
         setCommandExecutor("eco", new EcoCommands());
+
         setCommandExecutor("guild", new GuildCommands());
         setCommandExecutor("g", new GuildCommands());
+
         setCommandExecutor("prestige", new PrestigeCommands());
+
         setCommandExecutor("lobby", new LobbyCommands());
+
         setCommandExecutor("profile", new ProfileViewCommands());
+
+        setCommandExecutor("friend", new FriendCommand());
+        setCommandExecutor("f", new FriendCommand());
+
+        setCommandExecutor("msg", new ExtraCommands());
+        setCommandExecutor("whisper", new ExtraCommands());
     }
 
     @Override
