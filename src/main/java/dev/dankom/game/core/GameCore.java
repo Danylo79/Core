@@ -4,6 +4,6 @@ import dev.dankom.core.module.Module;
 
 public class GameCore extends Module {
     public GameCore() {
-        super("Game Core", "");
+        super("Game Core", "&a[GameCore]");
     }
 }

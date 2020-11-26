@@ -3,7 +3,6 @@ package dev.dankom.core;
 import dev.dankom.Start;
 import dev.dankom.core.commands.*;
 import dev.dankom.core.listeners.ProfileListener;
-import dev.dankom.core.lobby.LobbyManager;
 import dev.dankom.core.menu.MenuManager;
 import dev.dankom.core.module.Module;
 import dev.dankom.core.profile.Profile;

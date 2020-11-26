@@ -3,7 +3,6 @@ package dev.dankom.game.core.interfaces;
 import dev.dankom.game.core.interfaces.util.ISpawnpoint;
 import dev.dankom.trigger.Trigger;
 import me.arcaniax.hdb.api.HeadDatabaseAPI;
-import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Location;
 import org.bukkit.event.Event;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -14,6 +13,8 @@ import java.util.UUID;
 
 public interface IGame {
     ISession getSession();
+    int getMaxPlayers();
+    int getMinPlayers();
 
     //Util Methods
     default void generateRandomId() {

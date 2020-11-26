@@ -71,7 +71,7 @@ public class ProfilePlaceholders extends PlaceholderExpansion {
      */
     @Override
     public String getIdentifier(){
-        return "someplugin";
+        return "Core";
     }
 
     /**

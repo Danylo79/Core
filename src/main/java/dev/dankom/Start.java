@@ -55,8 +55,13 @@ public class Start extends JavaPlugin implements IResourceManager, Listener {
         getServer().getPluginManager().registerEvents(gameManager, this);
 
         for (Module m : moduleManager.getModules()) {
-            Logger.log(LogLevel.INFO, "Activating " + m.getName() + " module!");
-            m.onEnable();
+            if (m.canLoad()) {
+                Logger.log(LogLevel.INFO, "Activating " + m.getName() + " module!");
+                m.onEnable();
+            } else {
+                Logger.log(LogLevel.ERROR, "Failed to load module " + m.getName() + " because it is invalid or is missing dependencies!" + (!m.areDependenciesNeeded() ? "Dependencies: None" : "Dependencies: " + m.getDependencies().toString()));
+                continue;
+            }
         }
 
         new Trigger("startup");
@@ -125,5 +130,4 @@ public class Start extends JavaPlugin implements IResourceManager, Listener {
     public FileManager getFileManager() {
         return fileManager;
     }
-
 }

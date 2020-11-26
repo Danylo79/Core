@@ -6,7 +6,7 @@ import dev.dankom.papi.placeholders.ProfilePlaceholders;
 
 public class papiHook extends Module {
     public papiHook() {
-        super("PlaceholderAPI Hook", "PAPI Hook");
+        super("PlaceholderAPI Hook", "&a[PAPIH]");
 
         new ProfilePlaceholders(Start.getInstance()).register();
     }
