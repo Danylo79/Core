@@ -15,16 +15,34 @@ public class ExtraCommands implements CommandExecutor {
         Profile target = new Profile(Bukkit.getPlayer(args[0]));
 
         if (player != null && target != null) {
+
             String msg = "";
             for (int i = 1; i < args.length; i++) {
-                msg += args[i];
+                if (msg.equalsIgnoreCase("")) {
+                    msg += args[i];
+                } else {
+                    msg += " " + args[i];
+                }
             }
+
             if (command.getName().equalsIgnoreCase("msg")) {
-                player.player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&l&dTo&r " + target.getFullName() + "&r&7 " + msg));
-                target.player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&l&dFrom&r " + player.getFullName() + "&r&7 " + msg));
-                return true;
+                if (target.getFriends().contains(player)) {
+                    player.player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&dTo&r " + target.getFullName() + "&r&7 " + msg));
+                    target.player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&dFrom&r " + player.getFullName() + "&r&7 " + msg));
+                    return true;
+                } else {
+                    player.player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cYou can't message this person!"));
+                    return false;
+                }
             } else if (command.getName().equalsIgnoreCase("whisper")) {
-                return true;
+                if (target.getFriends().contains(player)) {
+                    player.player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6Whispered To&r " + target.getFullName() + "&r&7 " + msg));
+                    target.player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6Whisper From&r " + player.getFullName() + "&r&7 " + msg));
+                    return true;
+                } else {
+                    player.player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cYou can't whisper to this person!"));
+                    return false;
+                }
             }
         }
         return false;
