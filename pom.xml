@@ -99,7 +99,7 @@
             <artifactId>craftbukkit</artifactId>
             <version>1.8-R0.1-SNAPSHOT-latest</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/craftbukkit-1.8-R0.1-SNAPSHOT-latest.jar</systemPath>
+            <systemPath>${project.basedir}/craftbukkit-1.8-R0.1-SNAPSHOT-latest.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.googlecode.json-simple</groupId>
