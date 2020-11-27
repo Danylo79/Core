@@ -29,7 +29,7 @@ public class TriggerManager {
 
     private void register(Method method, Object o) {
         Class<?> clazz = method.getParameterTypes()[0];
-        final Data methodData = new Data(o, method, method.getAnnotation(TriggerMethod.class).trigger(), method.getAnnotation(TriggerMethod.class).value());
+        final Data methodData = new Data(o, method, method.getAnnotation(TriggerMethod.class).trigger(), method.getAnnotation(TriggerMethod.class).loc(), method.getAnnotation(TriggerMethod.class).value());
 
         if (!methodData.target.isAccessible()) {
             methodData.target.setAccessible(true);

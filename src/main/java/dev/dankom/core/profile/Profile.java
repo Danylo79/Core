@@ -12,6 +12,7 @@ import dev.dankom.core.profile.profileManager.IProfileManager;
 import dev.dankom.core.profile.profileManager.SimpleProfileManager;
 import dev.dankom.core.rank.Rank;
 import dev.dankom.util.ColorUtil;
+import dev.dankom.util.spigot.CorePlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -21,18 +22,22 @@ import java.util.List;
 import java.util.UUID;
 
 public class Profile {
-    public Player player;
+    public CorePlayer player;
 
-    public Profile(Player player) {
+    public Profile(CorePlayer player) {
         this.player = player;
     }
 
+    public Profile(Player player) {
+        this.player = (CorePlayer) player;
+    }
+
     public Profile(String player) {
-        this.player = Bukkit.getPlayer(player);
+        this.player = (CorePlayer) Bukkit.getPlayer(player);
     }
 
     public Profile(UUID player) {
-        this.player = Bukkit.getPlayer(player);
+        this.player = (CorePlayer) Bukkit.getPlayer(player);
     }
 
     public void addPlayerData() {

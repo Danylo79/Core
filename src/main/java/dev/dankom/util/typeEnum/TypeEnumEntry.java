@@ -5,10 +5,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 
-public class TypeEnumEntry<T> implements Serializable, Cloneable, Comparable<TypeEnumEntry> {
+public class TypeEnumEntry implements Serializable, Cloneable, Comparable<TypeEnumEntry> {
 
-    private String name;
-    private boolean deprecated;
+    protected String name;
+    protected boolean deprecated;
 
     @Override
     public int compareTo(@NotNull TypeEnumEntry o) {

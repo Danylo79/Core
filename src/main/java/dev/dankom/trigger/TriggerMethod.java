@@ -9,5 +9,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface TriggerMethod {
     String trigger() default "default";
+    String loc() default "all";
     byte value() default 2;
 }

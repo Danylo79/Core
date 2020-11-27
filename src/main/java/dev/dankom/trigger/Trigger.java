@@ -6,13 +6,25 @@ import java.lang.reflect.InvocationTargetException;
 
 public class Trigger {
     private String triggerName;
+    private String loc;
+
+    public Trigger(String name, String triggerThread) {
+        this.triggerName = name;
+        this.loc = triggerThread;
+        call();
+    }
 
     public Trigger(String name) {
         this.triggerName = name;
+        this.loc = "any";
         call();
     }
 
     public String getTriggerName() {
+        return triggerName;
+    }
+
+    public String getLoc() {
         return triggerName;
     }
 
@@ -32,7 +44,7 @@ public class Trigger {
         if (dataList != null) {
             for (Data data : dataList) {
                 try {
-                    if (data.trigger.equalsIgnoreCase(trigger.getTriggerName())) {
+                    if (shouldTrigger(trigger, data)) {
                         data.target.invoke(data.source, trigger);
                     }
                 } catch (IllegalAccessException e) {
@@ -42,6 +54,17 @@ public class Trigger {
                 }
 
             }
+        }
+    }
+
+    private static boolean shouldTrigger(Trigger trigger, Data data) {
+        boolean nameCorrect = data.trigger.equalsIgnoreCase(trigger.getTriggerName());
+        boolean needLocCorrect = !(data.thread.equalsIgnoreCase("any") || data.thread.equalsIgnoreCase("all"));
+        if (needLocCorrect) {
+            boolean locCorrect = data.thread.equalsIgnoreCase(trigger.getLoc());
+            return nameCorrect && locCorrect;
+        } else {
+            return nameCorrect;
         }
     }
 }
