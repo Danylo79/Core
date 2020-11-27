@@ -14,12 +14,30 @@ public class ProfileListener implements Listener {
         Profile profile = new Profile(e.getPlayer());
         profile.addPlayerData();
         profile.getProfileManager().refreshPlayer(profile);
+
+        for (Profile p : profile.getFriends()) {
+            p.player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aFriend > &r" + profile.getRank().getColor() + profile.getName() + " &ejoined the game."));
+        }
+
+        for (Profile p : profile.getGuild().getPlayers()) {
+            p.player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&2Guild > &r" + profile.getRank().getColor() + profile.getName() + " &ejoined the game."));
+        }
+
+        e.setJoinMessage("");
     }
 
     @EventHandler
     public void onQuit(PlayerQuitEvent e) {
         Profile profile = new Profile(e.getPlayer());
         profile.getProfileManager().refreshPlayer(profile);
+
+        for (Profile p : profile.getFriends()) {
+            p.player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aFriend > &r" + profile.getRank().getColor() + profile.getName() + " &eleft."));
+        }
+
+        for (Profile p : profile.getGuild().getPlayers()) {
+            p.player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&2Guild > &r" + profile.getRank().getColor() + profile.getName() + " &eleft."));
+        }
     }
 
     @EventHandler

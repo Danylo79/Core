@@ -11,7 +11,7 @@ public enum Rank {
     YOUTUBE("YOUTUBE", "&c[&fYOUTUBE&c]", "&c", 7, 10),
     ADMIN("ADMIN", "&c[ADMIN]", "&c", 8, 10),
     HELPER("HELPER", "&9[HELPER]", "&9", 9, 10),
-    OWNER("OWNER", "&e[OWNER]", "&e", 10, 10)
+    OWNER("OWNER", "&d[OWNER]", "&d", 10, 10)
     ;
 
     private String name;

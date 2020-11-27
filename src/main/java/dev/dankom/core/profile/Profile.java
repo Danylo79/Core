@@ -255,7 +255,7 @@ public class Profile {
     public List<Profile> getFriends() {
         List<Profile> friends = new ArrayList<>();
         for (String s : database().getStringList("profiles." + player.getUniqueId().toString() + ".friends")) {
-            friends.add(new Profile(s));
+            friends.add(new Profile(UUID.fromString(s)));
         }
         return friends;
     }
