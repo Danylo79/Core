@@ -16,6 +16,10 @@ public class GuildCommands implements CommandExecutor {
             if (args.length > 0) {
                 Profile profile = new Profile((Player) sender);
                 if (args[0].equalsIgnoreCase("create") && profile.getRank().getId() >= 2) {
+                    if (args[1].chars().count() > 6) {
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cThe name " + args[1] + " is to long! It must be less then 6 characters."));
+                        return false;
+                    }
                     if (GuildManager.getInstance().createGuild(profile, args[1])) {
                         Guild guild = GuildManager.getInstance().get(args[1]);
                         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aCreated guild " + guild.getName() + '!'));

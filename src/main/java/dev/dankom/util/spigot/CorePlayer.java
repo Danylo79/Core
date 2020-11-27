@@ -1,16 +1,15 @@
 package dev.dankom.util.spigot;
 
-import dev.dankom.core.profile.Profile;
-import me.clip.placeholderapi.PlaceholderAPI;
-import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
+import net.minecraft.server.v1_8_R1.EntityPlayer;
+import org.bukkit.craftbukkit.v1_8_R1.CraftServer;
+import org.bukkit.craftbukkit.v1_8_R1.entity.CraftPlayer;
 
-public abstract class CorePlayer implements Player {
-    public void sendFullMsg(String msg) {
-        sendMessage(ChatColor.translateAlternateColorCodes('&', PlaceholderAPI.setBracketPlaceholders(this, msg)));
+public class CorePlayer extends CraftPlayer {
+    public CorePlayer(CraftServer server, EntityPlayer entity) {
+        super(server, entity);
     }
 
-    public Profile getProfile() {
-        return new Profile(this);
+    public CoreHandle getCoreHandle() {
+        return new CoreHandle(this);
     }
 }

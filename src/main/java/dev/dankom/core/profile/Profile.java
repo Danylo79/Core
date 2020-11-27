@@ -1,5 +1,8 @@
 package dev.dankom.core.profile;
 
+import com.nametagedit.plugin.NametagEdit;
+import com.nametagedit.plugin.api.NametagAPI;
+import com.nametagedit.plugin.api.data.FakeTeam;
 import dev.dankom.Start;
 import dev.dankom.core.achievment.Achievement;
 import dev.dankom.core.achievment.Achievements;
@@ -22,22 +25,18 @@ import java.util.List;
 import java.util.UUID;
 
 public class Profile {
-    public CorePlayer player;
+    public Player player;
 
-    public Profile(CorePlayer player) {
+    public Profile(Player player) {
         this.player = player;
     }
 
-    public Profile(Player player) {
-        this.player = (CorePlayer) player;
-    }
-
     public Profile(String player) {
-        this.player = (CorePlayer) Bukkit.getPlayer(player);
+        this.player = Bukkit.getPlayer(player);
     }
 
     public Profile(UUID player) {
-        this.player = (CorePlayer) Bukkit.getPlayer(player);
+        this.player = Bukkit.getPlayer(player);
     }
 
     public void addPlayerData() {
@@ -74,6 +73,7 @@ public class Profile {
 
     public void update() {
         player.setPlayerListName(getFullName());
+        NametagEdit.getApi().setNametag(player, getPrefix(), "");
     }
 
     public Rank getRank() {
@@ -110,7 +110,15 @@ public class Profile {
     }
 
     public String getFullName() {
-        return ChatColor.translateAlternateColorCodes('&', getRank().getColor() + getRank().getDisplay() + (getRank().getDisplay().equals("") ? "" : " ") + getName() + getGuildTag());
+        return ChatColor.translateAlternateColorCodes('&', getPrefix() + getName() + getSuffix());
+    }
+
+    public String getPrefix() {
+        return ChatColor.translateAlternateColorCodes('&', getRank().getColor() + getRank().getDisplay() + (getRank().getDisplay().equals("") ? "" : " "));
+    }
+
+    public String getSuffix() {
+        return ChatColor.translateAlternateColorCodes('&', getGuildTag());
     }
 
     public String getGuildTag() {
