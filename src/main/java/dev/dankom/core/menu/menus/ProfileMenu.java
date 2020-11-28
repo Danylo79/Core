@@ -62,7 +62,7 @@ public class ProfileMenu extends Menu {
         inventory.setItem(17, item);
 
         item = new ItemHelper(Material.FLOWER_POT_ITEM, 1);
-        item.setDisplayName("&aLevel Icons");
+        item.setDisplayName("&aLevel Icons (" + profile.get("network.prestigeIcon") + ")");
         item.setLore("&7Show everyone your", "&7achievements by", "&7having a custom icon", "&7next to your level!");
         inventory.setItem(20, item);
 

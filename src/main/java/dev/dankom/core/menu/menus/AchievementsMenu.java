@@ -68,7 +68,8 @@ public class AchievementsMenu extends Menu {
                 ItemHelper item = new ItemHelper(a.getIcon(), 1);
                 item.setDisplayName(ChatColor.translateAlternateColorCodes('&', (a.isUnlocked(profile) ? "&a" : "&c") + a.getName()));
                 List<String> lore = ListHelper.toList(a.getRewardLore());
-                lore.add(0, "&7Rewards:");
+                lore.add(0, a.getUnlockString());
+                lore.add(1, "&7Rewards:");
                 item.setLore(lore);
                 inventory.setItem(i, item);
             } catch (IndexOutOfBoundsException e) {

@@ -259,4 +259,8 @@ public class Profile {
         }
         return friends;
     }
+
+    public CorePlayer getPlayer() {
+        return CorePlayer.toCorePlayer(player);
+    }
 }

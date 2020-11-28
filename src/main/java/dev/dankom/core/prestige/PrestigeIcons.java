@@ -112,7 +112,7 @@ public class PrestigeIcons {
                 return "Level 500+";
             }
         });
-        out.add(new PrestigeIcon("☾", "Level 1000") {
+        out.add(new PrestigeIcon("♪", "Level 1000") {
             @Override
             public boolean isUnlocked(Profile profile) {
                 return (int) profile.get("network.level") >= 1000;
@@ -169,6 +169,18 @@ public class PrestigeIcons {
             @Override
             public String getNeededToUnlock() {
                 return "Omega Achievement";
+            }
+        });
+        //Lunar
+        out.add(new PrestigeIcon("☽", "Lunar") {
+            @Override
+            public boolean isUnlocked(Profile profile) {
+                return profile.isAchievementUnlocked("lunar_join");
+            }
+
+            @Override
+            public String getNeededToUnlock() {
+                return "On the Moon Achievement";
             }
         });
         return out;

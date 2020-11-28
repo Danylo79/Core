@@ -27,6 +27,8 @@ public class ProfileListener implements Listener {
         }
 
         e.setJoinMessage("");
+
+        profile.completeAchievement("lunar_join");
     }
 
     @EventHandler

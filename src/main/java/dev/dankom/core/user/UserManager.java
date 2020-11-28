@@ -42,7 +42,7 @@ public class UserManager {
     public List<CorePlayer> getPlayers() {
         List<CorePlayer> out = new ArrayList<>();
         for (Profile p : users) {
-            out.add(new CorePlayer(p.player));
+            out.add(CorePlayer.toCorePlayer(p.player));
         }
         return out;
     }
