@@ -8,13 +8,15 @@ public class Achievement {
     private final String databaseName;
     private final Material icon;
     private final int achievementPoints;
+    private String unlockString;
     private final String[] rewardLore;
 
-    public Achievement(String name, String databaseName, Material icon, int achievementPoints, String... rewardLore) {
+    public Achievement(String name, String databaseName, Material icon, int achievementPoints, String unlockString, String... rewardLore) {
         this.name = name;
         this.databaseName = databaseName;
         this.icon = icon;
         this.achievementPoints = achievementPoints;
+        this.unlockString = unlockString;
         this.rewardLore = rewardLore;
     }
 
@@ -42,5 +44,13 @@ public class Achievement {
 
     public String getDatabaseName() {
         return databaseName;
+    }
+
+    public String getUnlockString() {
+        return unlockString;
+    }
+
+    public void setUnlockString(String unlockString) {
+        this.unlockString = unlockString;
     }
 }

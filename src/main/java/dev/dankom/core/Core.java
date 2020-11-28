@@ -2,6 +2,7 @@ package dev.dankom.core;
 
 import dev.dankom.Start;
 import dev.dankom.core.commands.*;
+import dev.dankom.core.listeners.ClientListener;
 import dev.dankom.core.listeners.ProfileListener;
 import dev.dankom.core.menu.MenuManager;
 import dev.dankom.core.module.Module;
@@ -11,6 +12,7 @@ import org.bukkit.entity.Player;
 
 public final class Core extends Module {
     private MenuManager menuManager;
+    private ClientListener clientListener;
 
     public Core() {
         super("Core", "&d[&bCore&d]");
@@ -19,10 +21,12 @@ public final class Core extends Module {
     @Override
     public void onEnable() {
         this.menuManager = new MenuManager();
+        this.clientListener = new ClientListener();
 
         registerListener(new ProfileListener());
         registerListener(Start.getInstance().lobbyManager);
         registerListener(Start.getInstance().cosmeticManager);
+        registerListener(clientListener);
 
         setCommandExecutor("setRank", new RankCommands());
         setCommandExecutor("rank", new RankCommands());
@@ -45,6 +49,8 @@ public final class Core extends Module {
 
         setCommandExecutor("msg", new ExtraCommands());
         setCommandExecutor("whisper", new ExtraCommands());
+
+        clientListener.init();
     }
 
     @Override

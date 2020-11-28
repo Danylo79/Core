@@ -1,6 +1,7 @@
 package dev.dankom.core.listeners;
 
 import dev.dankom.core.profile.Profile;
+import dev.dankom.core.user.UserManager;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -14,6 +15,8 @@ public class ProfileListener implements Listener {
         Profile profile = new Profile(e.getPlayer());
         profile.addPlayerData();
         profile.getProfileManager().refreshPlayer(profile);
+
+        UserManager.getInstance().addPlayer(e.getPlayer());
 
         for (Profile p : profile.getFriends()) {
             p.player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aFriend > &r" + profile.getRank().getColor() + profile.getName() + " &ejoined the game."));
