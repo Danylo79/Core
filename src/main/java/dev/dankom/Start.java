@@ -1,5 +1,7 @@
 package dev.dankom;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import dev.dankom.core.Core;
 import dev.dankom.core.cosmetics.CosmeticManager;
 import dev.dankom.core.file.FileManager;
@@ -33,6 +35,9 @@ public class Start extends JavaPlugin implements IResourceManager, Listener {
     public CosmeticManager cosmeticManager;
     public GameManager gameManager;
     public static String v = null;
+
+    public static final Gson GSON_NON_PRETTY = new GsonBuilder().enableComplexMapKeySerialization().disableHtmlEscaping().create();
+    public static final Gson GSON_PRETTY = new GsonBuilder().enableComplexMapKeySerialization().disableHtmlEscaping().setPrettyPrinting().create();
 
     @Override
     public void onEnable() {

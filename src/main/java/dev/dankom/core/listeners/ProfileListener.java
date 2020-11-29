@@ -16,8 +16,6 @@ public class ProfileListener implements Listener {
         profile.addPlayerData();
         profile.getProfileManager().refreshPlayer(profile);
 
-        UserManager.getInstance().addPlayer(e.getPlayer());
-
         for (Profile p : profile.getFriends()) {
             p.player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aFriend > &r" + profile.getRank().getColor() + profile.getName() + " &ejoined the game."));
         }

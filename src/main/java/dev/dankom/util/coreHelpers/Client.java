@@ -1,9 +1,11 @@
-package dev.dankom.util.spigot;
+package dev.dankom.util.coreHelpers;
 
 public enum Client {
 
-    LUNAR_CLIENT("Lunar-Client", "Lunar Client"),
-    VANILLA("", "Vanilla")
+    LUNAR("Lunar-Client", "Lunar Client"),
+    VANILLA("Vanilla"),
+    BADLION("Badlion"),
+    NOT_SET("")
     ;
 
     private final String channel;
@@ -11,6 +13,11 @@ public enum Client {
 
     Client(String channel, String name) {
         this.channel = channel;
+        this.name = name;
+    }
+
+    Client(String name) {
+        this.channel = "";
         this.name = name;
     }
 

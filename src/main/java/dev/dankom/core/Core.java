@@ -49,8 +49,6 @@ public final class Core extends Module {
 
         setCommandExecutor("msg", new ExtraCommands());
         setCommandExecutor("whisper", new ExtraCommands());
-
-        clientListener.init();
     }
 
     @Override

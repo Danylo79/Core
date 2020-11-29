@@ -2,9 +2,10 @@ package dev.dankom.core.user;
 
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
-import dev.dankom.core.Core;
-import dev.dankom.core.profile.Profile;
-import dev.dankom.util.spigot.CorePlayer;
+import dev.dankom.logger.LogLevel;
+import dev.dankom.logger.Logger;
+import dev.dankom.util.Validation;
+import dev.dankom.util.coreHelpers.CorePlayer;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.util.UUID;
 
 public class UserManager {
     private ProtocolManager protocolManager;
-    private static List<Profile> users = new ArrayList<>();
+    private static List<Player> users = new ArrayList<>();
     private static UserManager instance;
 
     public UserManager() {
@@ -28,26 +29,51 @@ public class UserManager {
         return instance;
     }
 
-    public CorePlayer getPlayer(UUID uuid) {
-        for (CorePlayer cp : getPlayers()) {
-            if (cp.getUniqueId() == uuid) {
+    public Player getPlayer(UUID uuid) {
+        for (Player cp : getPlayers()) {
+            if (cp.getUniqueId().equals(uuid)) {
                 return cp;
             } else {
                 continue;
             }
         }
+        Logger.log(LogLevel.ERROR, "Player instance not found in the UserManager class.");
         return null;
     }
 
-    public List<CorePlayer> getPlayers() {
-        List<CorePlayer> out = new ArrayList<>();
-        for (Profile p : users) {
-            out.add(CorePlayer.toCorePlayer(p.player));
+    public Player getCorePlayer(UUID uuid) {
+        for (Player cp : getPlayers()) {
+            if (cp.getUniqueId().equals(uuid)) {
+                return CorePlayer.toCorePlayer(cp);
+            } else {
+                continue;
+            }
+        }
+        Logger.log(LogLevel.ERROR, "Player instance not found in the UserManager class.");
+        return null;
+    }
+
+    public List<Player> getPlayers() {
+        List<Player> out = new ArrayList<>();
+        for (Player p : users) {
+            out.add(p);
         }
         return out;
     }
 
     public void addPlayer(Player player) {
-        users.add(new Profile(player));
+        Validation.notNull("Cannot add null player to users!", player);
+        if (!contains(player) && player != null) {
+            users.add(player);
+        }
+    }
+
+    public void updatePlayer(UUID uuid, Player player) {
+        users.remove(getPlayer(uuid));
+        addPlayer(player);
+    }
+
+    public boolean contains(Player player) {
+        return users.contains(player);
     }
 }

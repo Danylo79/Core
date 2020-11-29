@@ -1,8 +1,6 @@
 package dev.dankom.core.profile;
 
 import com.nametagedit.plugin.NametagEdit;
-import com.nametagedit.plugin.api.NametagAPI;
-import com.nametagedit.plugin.api.data.FakeTeam;
 import dev.dankom.Start;
 import dev.dankom.core.achievment.Achievement;
 import dev.dankom.core.achievment.Achievements;
@@ -15,7 +13,7 @@ import dev.dankom.core.profile.profileManager.IProfileManager;
 import dev.dankom.core.profile.profileManager.SimpleProfileManager;
 import dev.dankom.core.rank.Rank;
 import dev.dankom.util.ColorUtil;
-import dev.dankom.util.spigot.CorePlayer;
+import dev.dankom.util.coreHelpers.CorePlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
