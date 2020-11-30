@@ -24,7 +24,7 @@ public class DefaultGame implements IGame {
         this.maxPlayers = maxPlayers;
         this.minPlayers = minPlayers;
         this.map = map;
-        this.session = new DefaultSession(GameManager.getInstance(), this, this.map);
+        this.session = new DefaultSession(this, this.map);
     }
 
     @Override
@@ -46,14 +46,18 @@ public class DefaultGame implements IGame {
             }
             onStart();
         } catch (Exception e) {
-            //Fail Safe encase of error
-            Logger.log(LogLevel.ERROR, "Failed to start game! Id: " + getSession().getId());
-            for (Profile p : getSession().getPlayers()) {
-                CorePlayer cp = p.getPlayer();
-                p.set("network.game.id", "");
-                cp.sendMessage("&cFailed to start game! Wait a bit and try again!");
-                cp.kickPlayer("&cFailed to start game! Sorry for the inconvenience. Game Id: (&b" + getSession().getId() + "&c)");
-            }
+            failSafe();
+        }
+    }
+
+    public void failSafe() {
+        //Fail Safe encase of error
+        Logger.log(LogLevel.ERROR, "Failed to start game! Id: " + getSession().getId());
+        for (Profile p : getSession().getPlayers()) {
+            CorePlayer cp = p.getPlayer();
+            p.set("network.game.id", "");
+            cp.sendMessage("&cFailed to start game! Wait a bit and try again!");
+            cp.kickPlayer("&cFailed to start game! Sorry for the inconvenience. Game Id: (&b" + getSession().getId() + "&c)");
         }
     }
 

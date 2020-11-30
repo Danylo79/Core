@@ -18,8 +18,8 @@ public class DefaultSession implements ISession {
     private List<Profile> players;
     private UUID id;
 
-    public DefaultSession(GameManager gameManager, IGame parent, IMap map) {
-        this.gameManager = gameManager;
+    public DefaultSession(IGame parent, IMap map) {
+        this.gameManager = GameManager.getInstance();
         this.parent = parent;
         this.map = map;
         this.players = new ArrayList<>();
