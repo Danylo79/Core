@@ -12,6 +12,8 @@ import dev.dankom.core.inbox.Inbox;
 import dev.dankom.core.profile.profileManager.IProfileManager;
 import dev.dankom.core.profile.profileManager.SimpleProfileManager;
 import dev.dankom.core.rank.Rank;
+import dev.dankom.game.core.GameManager;
+import dev.dankom.game.core.interfaces.IGame;
 import dev.dankom.util.ColorUtil;
 import dev.dankom.util.coreHelpers.CorePlayer;
 import org.bukkit.Bukkit;
@@ -52,6 +54,7 @@ public class Profile {
         addData("network.achievementPoints", 0);
         addData("network.prestigeIcon", "");
         addData("network.lobby", false);
+        addData("network.game.id", "");
         //Lobby
         addData("lobby.hidePlayers", false);
         addData("lobby.fly", false);
@@ -260,5 +263,9 @@ public class Profile {
 
     public CorePlayer getPlayer() {
         return CorePlayer.toCorePlayer(player);
+    }
+
+    public IGame getGame() {
+        return GameManager.getInstance().getGameRepository().getGame(UUID.fromString((String) get("network.game.id")));
     }
 }

@@ -1,7 +1,7 @@
 package dev.dankom.game.core.interfaces;
 
 import dev.dankom.game.core.interfaces.util.ISpawnpoint;
-import dev.dankom.util.CoreWorld;
+import dev.dankom.util.coreHelpers.CoreWorld;
 
 import java.util.List;
 

@@ -3,7 +3,9 @@ package dev.dankom.core.menu.menus;
 import dev.dankom.core.menu.Menu;
 import dev.dankom.core.menu.MenuManager;
 import dev.dankom.core.profile.Profile;
+import dev.dankom.core.user.UserManager;
 import dev.dankom.util.ItemHelper;
+import dev.dankom.util.coreHelpers.CorePlayer;
 import me.arcaniax.hdb.api.HeadDatabaseAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -11,6 +13,9 @@ import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProfileViewer extends Menu {
 
@@ -41,6 +46,15 @@ public class ProfileViewer extends Menu {
         inventory.setItem(8, item);
 
         inventory.setItem(4, profileHead);
+
+        item = new ItemHelper(Material.BREWING_STAND_ITEM, 1);
+        item.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&6Network Data:"));
+        List<String> lore = new ArrayList<>();
+        for (String s : profile.getPlayer().toStrings()) {
+            lore.add(ChatColor.translateAlternateColorCodes('&', "&7" + s));
+        }
+        item.setLore(lore);
+        inventory.setItem(5, item);
 
         return inventory;
     }

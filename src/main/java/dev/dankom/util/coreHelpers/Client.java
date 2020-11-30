@@ -5,7 +5,7 @@ public enum Client {
     LUNAR("Lunar-Client", "Lunar Client"),
     VANILLA("Vanilla"),
     BADLION("Badlion"),
-    NOT_SET("")
+    NOT_SET("None")
     ;
 
     private final String channel;

@@ -48,13 +48,20 @@ public class MenuManager implements Listener {
 
     @EventHandler
     public void onClick(InventoryClickEvent e) {
-        for (Menu m : menus) {
-            if (ChatColor.stripColor(e.getClickedInventory().getTitle()).equals(ChatColor.stripColor(m.inventory.getTitle()))) {
-                if (!m.canTake) {
-                    e.setCancelled(true);
+        try {
+            for (Menu m : menus) {
+                if (ChatColor.stripColor(e.getClickedInventory().getTitle()).equals(ChatColor.stripColor(m.inventory.getTitle()))) {
+                    if (!m.canTake) {
+                        e.setCancelled(true);
+                    }
+                    m.onClick(new Profile((Player) e.getWhoClicked()), e.getSlot());
                 }
-                m.onClick(new Profile((Player) e.getWhoClicked()), e.getSlot());
             }
+        } catch (NullPointerException nullPointerException) {
+            return;
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return;
         }
     }
 

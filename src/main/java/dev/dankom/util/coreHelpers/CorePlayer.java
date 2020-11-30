@@ -4,13 +4,19 @@ import dev.dankom.core.profile.Profile;
 import dev.dankom.core.user.UserManager;
 import dev.dankom.logger.LogLevel;
 import dev.dankom.logger.Logger;
+import dev.dankom.util.ListHelper;
 import dev.dankom.util.Validation;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.minecraft.server.v1_8_R1.EntityPlayer;
+import net.minecraft.server.v1_8_R1.NetworkManager;
+import net.minecraft.server.v1_8_R1.PlayerConnection;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_8_R1.CraftServer;
 import org.bukkit.craftbukkit.v1_8_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CorePlayer extends CraftPlayer {
     private String channel;
@@ -77,9 +83,25 @@ public class CorePlayer extends CraftPlayer {
         return corePlayer;
     }
 
+    public List<String> toStrings() {
+        List<String> out = new ArrayList<>();
+        out.add("&7CraftPlayer={&b" + getDisplayName() + "&7}");
+//        out.add("UUID={" + getUniqueId().toString() + "}");
+        out.add("&7Profile={" + getCoreProfile().getFullName() + "&7}");
+        out.add("&7Client={&b" + getClientHelper().getClient().getName() + "&7}");
+        return out;
+    }
+
     @Override
     public String toString() {
-        String out = "CraftPlayer={" + getCoreHandle().getCraftBukkitReference().toString() + ", UUID={" + getUniqueId().toString() + "}, Profile={" + getCoreProfile().getFullName() + "}";
+        String out = "";
+        for (int i = 0; i < toStrings().size(); i++) {
+            if (i == (toStrings().size() - 1)) {
+                out += toStrings().get(i);
+            } else {
+                out += toStrings().get(i) + " ";
+            }
+        }
         return out;
     }
 
@@ -125,24 +147,39 @@ public class CorePlayer extends CraftPlayer {
         public CorePlayer player() {
             return CorePlayer.toCorePlayer(UserManager.getInstance().getPlayer(player.getUniqueId()));
         }
+
+        public NetworkManager getNetworkManager() {
+            return player().getHandle().playerConnection.networkManager;
+        }
+
+        public PlayerConnection getPlayerConnection() {
+            return player().getHandle().playerConnection;
+        }
     }
 
     public class ClientHelper {
         private CorePlayer player;
         private String channel;
         private Client client;
+        private List<String> ignoredChannels;
 
         public ClientHelper(Player player) {
+            this.ignoredChannels = ListHelper.toList(
+                    "WECUI"
+            );
+
             this.player = CorePlayer.toCorePlayer(player);
             this.client = Client.NOT_SET;
         }
 
+        public boolean isAuthenticated() {
+            return !player.getCoreHandle().isClient(Client.NOT_SET);
+        }
+
         public void setClient(Client client) {
             setChannel(client.getChannel());
-            if (this.client == Client.NOT_SET) {
-                this.client = client;
-            }
-            Logger.log(LogLevel.INFO, "&aSet &b" + getDisplayName() + "&a client to &b" + client.getName() + "&a! Using the [&b" + client.getChannel() + "&a] channel!");
+            this.client = client;
+            Logger.log(LogLevel.INFO, "&aSet &b" + getDisplayName() + "&a client to &b" + getClient().getName() + "&a! Using the [&b" + getClient().getChannel() + "&a] channel!");
             player().refresh();
         }
 
@@ -160,6 +197,8 @@ public class CorePlayer extends CraftPlayer {
         }
 
         public void setup(String channel) {
+            if (ignoredChannels.contains(channel)) { return; }
+
             setChannel(channel);
             setClient(Client.getClient(channel()));
             player().refresh();
