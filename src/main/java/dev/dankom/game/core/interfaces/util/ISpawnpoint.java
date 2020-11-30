@@ -1,8 +1,9 @@
 package dev.dankom.game.core.interfaces.util;
 
+import dev.dankom.util.coreHelpers.CoreLocation;
 import org.bukkit.Location;
 
 public interface ISpawnpoint {
-    Location getSpawn();
+    CoreLocation getSpawn();
     int getNumber();
 }

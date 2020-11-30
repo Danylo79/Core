@@ -105,6 +105,11 @@ public class CorePlayer extends CraftPlayer {
         return out;
     }
 
+    @Override
+    public void kickPlayer(String message) {
+        super.kickPlayer(ChatColor.translateAlternateColorCodes('&', PlaceholderAPI.setBracketPlaceholders(this, message)));
+    }
+
     public void refresh() {
         getUserManager().updatePlayer(getUniqueId(), this);
     }

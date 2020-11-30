@@ -3,8 +3,11 @@ package dev.dankom.util.coreHelpers;
 import net.minecraft.server.v1_8_R1.WorldServer;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.WorldCreator;
 import org.bukkit.craftbukkit.v1_8_R1.CraftWorld;
+import org.bukkit.entity.Player;
 import org.bukkit.generator.ChunkGenerator;
 
 import java.io.File;
@@ -14,12 +17,13 @@ public class CoreWorld extends CraftWorld {
         super(world, gen, env);
     }
 
-    public boolean copyWorld(File destDir) {
+    public World copyWorld(String name, File destDir) {
         try {
             FileUtils.copyDirectory(getWorldFolder(), destDir);
-            return true;
+            WorldCreator worldCreator = new WorldCreator(name);
+            return worldCreator.createWorld();
         } catch (Exception e) {
-            return false;
+            return null;
         }
     }
 
@@ -27,8 +31,8 @@ public class CoreWorld extends CraftWorld {
         return new CoreHandle(this);
     }
 
-    public boolean duplicateWorld() {
-        return copyWorld(getWorldFolder().getParentFile());
+    public World duplicateWorld(String name) {
+        return copyWorld(name, getWorldFolder().getParentFile());
     }
 
     public boolean delete() {
@@ -37,6 +41,17 @@ public class CoreWorld extends CraftWorld {
             FileUtils.deleteDirectory(getWorldFolder());
             return true;
         } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean connectPlayer(CorePlayer player, double x, double y, double z) {
+        try {
+            player.sendMessage("&aSending you to &b" + getName() + "&b!");
+            player.teleport(new Location(this, x, y, z));
+            return true;
+        } catch (Exception e) {
+            player.sendMessage("&cFailed to send you to server! Wait a bit and try again. If this error is persistent contact an admin.");
             return false;
         }
     }
