@@ -5,6 +5,10 @@ public class Validation {
         throwException(msg, object != null);
     }
 
+    public static void throwCompactException(String msg) {
+        throwException(msg, false);
+    }
+
     private static void throwException(String msg, boolean validation) {
         if (!validation) {
             try {

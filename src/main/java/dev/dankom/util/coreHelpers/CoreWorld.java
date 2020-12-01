@@ -1,5 +1,6 @@
 package dev.dankom.util.coreHelpers;
 
+import dev.dankom.core.lobby.LobbyManager;
 import net.minecraft.server.v1_8_R1.WorldServer;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
@@ -11,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.generator.ChunkGenerator;
 
 import java.io.File;
+import java.util.List;
 
 public class CoreWorld extends CraftWorld {
     public CoreWorld(WorldServer world, ChunkGenerator gen, Environment env) {
@@ -54,6 +56,11 @@ public class CoreWorld extends CraftWorld {
             player.sendMessage("&cFailed to send you to server! Wait a bit and try again. If this error is persistent contact an admin.");
             return false;
         }
+    }
+
+    public boolean isLobby() {
+        List<String> lobbies = LobbyManager.database().getStringList("lobbies");
+        return lobbies.contains(getName());
     }
 
     public static CoreWorld toCoreWorld(World world) {

@@ -33,6 +33,7 @@ public class LobbyManager implements Listener {
             profile.getProfileManager().refreshPlayer(true, profile);
             profile.player.teleport(new Location(profile.player.getWorld(), (double) database().get("x"), (double) database().get("y"), (double) database().get("z")));
         } else {
+            profile.getProfileManager().refreshPlayer(false, profile);
             profile.set("network.lobby", false);
         }
     }
@@ -137,7 +138,7 @@ public class LobbyManager implements Listener {
         return (boolean) player.get("network.lobby");
     }
 
-    public ConfigFile database() {
+    public static ConfigFile database() {
         return Start.getInstance().getFileManager().lobbyFile;
     }
 }
