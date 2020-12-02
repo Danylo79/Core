@@ -5,10 +5,12 @@ import dev.dankom.core.file.yml.ConfigFile;
 import dev.dankom.core.menu.MenuManager;
 import dev.dankom.core.profile.Profile;
 import dev.dankom.util.ItemHelper;
+import dev.dankom.util.MathHelper;
+import dev.dankom.util.coreHelpers.core.CorePlayer;
+import dev.dankom.util.coreHelpers.lobby.LobbyWorld;
+import dev.dankom.util.coreHelpers.core.CoreWorld;
 import me.arcaniax.hdb.api.HeadDatabaseAPI;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -21,9 +23,98 @@ import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LobbyManager implements Listener {
+
+    private static LobbyManager instance;
+    private static List<LobbyWorld> lobbyPool;
+    private static LobbyWorld base;
+
+    public static void init() {
+        if (database().get("lobby") == null) {
+            database().set("lobby", "world");
+            database().set("x", 0);
+            database().set("y", 0);
+            database().set("z", 0);
+            database().set("old", false);
+            database().saveConfig();
+            database().reloadConfig();
+        }
+
+        lobbyPool = new ArrayList<>();
+        base = CoreWorld.toCoreWorld(Bukkit.getWorld((String) database().get("lobby"))).getAsLobby();
+    }
+
+    public static void shutdown() {
+        for (LobbyWorld lb : lobbyPool) {
+            for (Player p : lb.getPlayers()) {
+                p.kickPlayer("&cServer restarting!");
+            }
+            lb.delete();
+        }
+    }
+
+    public boolean connectPlayer(Player player) {
+        LobbyWorld lobby = getOpenLobby();
+        CorePlayer cp = CorePlayer.toCorePlayer(player);
+        try {
+            return lobby.connectPlayer(cp, database().getInt("x"), database().getInt("y"), database().getInt("z"));
+        } catch (Exception e) {
+            cp.kickPlayer("&cFailed to connect you to an open lobby!");
+            return false;
+        }
+    }
+
+    public LobbyWorld getOpenLobby() {
+        for (LobbyWorld l : lobbyPool) {
+            boolean maxPlayers = l.getPlayers().size() < l.getLobbyType().getMaxPlayers();
+            boolean valid = l.isLobby() && l.getLobbyType() != null && !l.getName().equals("");
+            if (maxPlayers && valid) {
+                return l;
+            } else {
+                continue;
+            }
+        }
+        return createLobby();
+    }
+
+    public LobbyWorld createLobby() {
+        LobbyWorld lb = CoreWorld.toCoreWorld(base.duplicateWorld(base.getLobbyType().name().toLowerCase() + genRandId())).getAsLobby();
+        lobbyPool.add(lb);
+        return lb;
+    }
+
+    private int genRandId() {
+        int id = MathHelper.randomInt(1000, 9999);
+        boolean used = false;
+        for (LobbyWorld lb : lobbyPool) {
+            if (lb.getName().equalsIgnoreCase(lb.getLobbyType() + String.valueOf(id))) {
+                used = true;
+                break;
+            } else {
+                continue;
+            }
+        }
+        if (used) {
+            return genRandId();
+        } else {
+            return MathHelper.randomInt(1000, 9999);
+        }
+    }
+
+    public static LobbyWorld getLobby(int id) {
+        for (LobbyWorld lb : lobbyPool) {
+            if (lb.getName().equalsIgnoreCase("mini" + id)) {
+                return lb;
+            } else {
+                continue;
+            }
+        }
+        return null;
+    }
+
     @EventHandler
     public void onChangeWorld(PlayerChangedWorldEvent e) {
         List<String> lobbies = database().getStringList("lobbies");
@@ -87,7 +178,7 @@ public class LobbyManager implements Listener {
 
     public void click(Profile profile, int slot) {
         if (slot == 1) {
-            MenuManager.profileMenu.openInv(profile);
+            new MenuManager().profileMenu.openInv(profile);
         }
     }
 
@@ -132,6 +223,13 @@ public class LobbyManager implements Listener {
                 e.setCancelled(true);
             }
         }
+    }
+
+    public static LobbyManager getInstance() {
+        if (instance == null) {
+            instance = new LobbyManager();
+        }
+        return instance;
     }
 
     public boolean isInLobby(Profile player) {

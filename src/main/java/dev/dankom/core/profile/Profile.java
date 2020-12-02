@@ -15,7 +15,7 @@ import dev.dankom.core.rank.Rank;
 import dev.dankom.game.core.GameManager;
 import dev.dankom.game.core.interfaces.IGame;
 import dev.dankom.util.ColorUtil;
-import dev.dankom.util.coreHelpers.CorePlayer;
+import dev.dankom.util.coreHelpers.core.CorePlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -267,5 +267,52 @@ public class Profile {
 
     public IGame getGame() {
         return GameManager.getInstance().getGameRepository().getGame(UUID.fromString((String) get("network.game.id")));
+    }
+
+    public void resetNick() {
+        set("nick.nicked", false);
+        set("nick.name", "");
+        set("nick.id", "");
+    }
+
+    public void disableNick() {
+        set("nick.nicked", false);
+    }
+
+    public static class Nick {
+        private String name;
+        private Rank rank;
+
+        public Nick(String name, Rank rank) {
+            this.name = name;
+            this.rank = rank;
+        }
+
+        public Nick() {
+            this.name = "Not Set";
+            this.rank = Rank.NONE;
+        }
+
+        public void set(Profile profile) {
+            profile.set("nick.nicked", true);
+            profile.set("nick.name", getName());
+            profile.set("nick.rank", getRank().getId());
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public Rank getRank() {
+            return rank;
+        }
+
+        public void setRank(Rank rank) {
+            this.rank = rank;
+        }
     }
 }

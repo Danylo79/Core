@@ -1,11 +1,8 @@
 package dev.dankom.core.menu.menus;
 
 import dev.dankom.core.menu.Menu;
-import dev.dankom.core.menu.MenuManager;
 import dev.dankom.core.profile.Profile;
-import dev.dankom.core.user.UserManager;
 import dev.dankom.util.ItemHelper;
-import dev.dankom.util.coreHelpers.CorePlayer;
 import me.arcaniax.hdb.api.HeadDatabaseAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

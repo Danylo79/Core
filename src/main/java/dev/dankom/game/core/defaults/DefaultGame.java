@@ -1,6 +1,5 @@
 package dev.dankom.game.core.defaults;
 
-import dev.dankom.core.Triggers;
 import dev.dankom.core.lobby.LobbyManager;
 import dev.dankom.core.profile.Profile;
 import dev.dankom.game.core.interfaces.IGame;
@@ -13,9 +12,9 @@ import dev.dankom.trigger.triggers.game.EndGameTrigger;
 import dev.dankom.trigger.triggers.game.FailGameTrigger;
 import dev.dankom.trigger.triggers.game.StartGameTrigger;
 import dev.dankom.util.Validation;
-import dev.dankom.util.coreHelpers.CoreLocation;
-import dev.dankom.util.coreHelpers.CorePlayer;
-import dev.dankom.util.coreHelpers.CoreWorld;
+import dev.dankom.util.coreHelpers.core.CoreLocation;
+import dev.dankom.util.coreHelpers.core.CorePlayer;
+import dev.dankom.util.coreHelpers.core.CoreWorld;
 import org.bukkit.Bukkit;
 
 public class DefaultGame implements IGame {

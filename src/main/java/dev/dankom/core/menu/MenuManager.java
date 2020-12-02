@@ -18,18 +18,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MenuManager implements Listener {
-    public static PrestigeMenu prestigeMenu = new PrestigeMenu();
-    public static ProfileMenu profileMenu = new ProfileMenu();
-    public static AchievementsMenu achievementsMenu = new AchievementsMenu();
-    public static LobbySettingsMenu lobbySettingsMenu = new LobbySettingsMenu();
-    public static CosmeticMenu cosmeticMenu = new CosmeticMenu();
+    public List<Menu> menus = new ArrayList<>();
+    public PrestigeMenu prestigeMenu = new PrestigeMenu();
+    public ProfileMenu profileMenu = new ProfileMenu();
+    public AchievementsMenu achievementsMenu = new AchievementsMenu();
+    public LobbySettingsMenu lobbySettingsMenu = new LobbySettingsMenu();
+    public CosmeticMenu cosmeticMenu = new CosmeticMenu();
+    public ProfileViewer profileViewerMenu = new ProfileViewer();
+    public NickMenu nickMenu = new NickMenu();
     //Effect Menus
-    public static KillMessageMenu killMessagesMenu = new KillMessageMenu();
-    public static ProjectileTrailMenu projectileTrailMenu = new ProjectileTrailMenu();
-    public static KillEffectMenu killEffectMenu = new KillEffectMenu();
-    public static ClickEffectMenu clickEffectMenu = new ClickEffectMenu();
-    public static ProfileViewer profileViewerMenu = new ProfileViewer();
-    public static List<Menu> menus = new ArrayList<>();
+    public KillMessageMenu killMessagesMenu = new KillMessageMenu();
+    public ProjectileTrailMenu projectileTrailMenu = new ProjectileTrailMenu();
+    public KillEffectMenu killEffectMenu = new KillEffectMenu();
+    public ClickEffectMenu clickEffectMenu = new ClickEffectMenu();
 
     public MenuManager() {
         menus.add(prestigeMenu);
@@ -42,6 +43,7 @@ public class MenuManager implements Listener {
         menus.add(killEffectMenu);
         menus.add(lobbySettingsMenu);
         menus.add(profileViewerMenu);
+        menus.add(nickMenu);
 
         Bukkit.getPluginManager().registerEvents(this, Start.getInstance());
     }

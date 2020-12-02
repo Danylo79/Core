@@ -17,12 +17,19 @@ public class Menu {
         this.amtOfSlots = amtOfSlots;
     }
 
+    public Menu(Inventory inventory) {
+        this.title = inventory.getTitle();
+        this.canTake = false;
+        this.amtOfSlots = inventory.getSize();
+    }
+
     public Inventory createInv(Profile profile) {
         this.inventory = Bukkit.createInventory(null, amtOfSlots, ChatColor.translateAlternateColorCodes('&', title));
         return inventory;
     }
+
     public void openInv(Profile profile) {
-        profile.player.openInventory(inventory);
+        profile.player.openInventory(createInv(profile));
     }
 
     //Event Hooks

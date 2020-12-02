@@ -56,18 +56,12 @@ public class LobbySettingsMenu extends Menu {
     }
 
     @Override
-    public void openInv(Profile profile) {
-        createInv(profile);
-        super.openInv(profile);
-    }
-
-    @Override
     public void onClick(Profile player, int slot) {
         try {
             if (slot == 49) {
                 player.player.closeInventory();
             } else if (slot == 45) {
-                MenuManager.profileMenu.openInv(player);
+                new MenuManager().profileMenu.openInv(player);
             } else if (slot == 21) {
                 player.player.chat("/lobby fly");
             } else if (slot == 23) {

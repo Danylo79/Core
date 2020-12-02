@@ -6,6 +6,7 @@ import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import dev.dankom.game.core.interfaces.util.ISpawnpoint;
 import dev.dankom.trigger.Trigger;
+import dev.dankom.util.coreHelpers.core.CoreLocation;
 import me.arcaniax.hdb.api.HeadDatabaseAPI;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Location;
@@ -25,7 +26,7 @@ public interface IGame {
     default void generateRandomId() {
         getSession().setId(UUID.randomUUID());
     }
-    default Location getSpawn(int id) {
+    default CoreLocation getSpawn(int id) {
         for (ISpawnpoint sp : getSession().getMap().getSpawnpoints()) {
             if (sp.getNumber() == id) {
                 return sp.getSpawn();

@@ -1,7 +1,7 @@
 package dev.dankom.core.listeners;
 
 import dev.dankom.Start;
-import dev.dankom.util.coreHelpers.CorePlayer;
+import dev.dankom.util.coreHelpers.core.CorePlayer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerRegisterChannelEvent;

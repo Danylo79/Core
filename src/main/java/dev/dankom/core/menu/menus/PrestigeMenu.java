@@ -48,12 +48,6 @@ public class PrestigeMenu extends Menu {
         return inventory;
     }
 
-    @Override
-    public void openInv(Profile profile) {
-        createInv(profile);
-        super.openInv(profile);
-    }
-
     public void addPrestigeIcons(Profile profile) {
         for (int i = 0; i < inventory.getSize(); i++) {
             try {
@@ -79,7 +73,7 @@ public class PrestigeMenu extends Menu {
             if (slot == 49) {
                 player.player.closeInventory();
             } else if (slot == 45) {
-                MenuManager.profileMenu.openInv(player);
+                new MenuManager().profileMenu.openInv(player);
             } else {
                 if (PrestigeIcons.getPrestigeIcons().get(slot) != null && PrestigeIcons.getPrestigeIcons().get(slot).isUnlocked(player)) {
                     player.set("network.prestigeIcon", PrestigeIcons.getPrestigeIcons().get(slot).getPrestigeIcon());

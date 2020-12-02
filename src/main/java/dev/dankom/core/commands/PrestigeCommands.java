@@ -11,7 +11,7 @@ public class PrestigeCommands implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (command.getName().equalsIgnoreCase("prestige")) {
-            MenuManager.menus.get(0).openInv(new Profile((Player) sender));
+            new MenuManager().menus.get(0).openInv(new Profile((Player) sender));
         }
         return false;
     }

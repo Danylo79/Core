@@ -52,12 +52,6 @@ public class AchievementsMenu extends Menu {
         return inventory;
     }
 
-    @Override
-    public void openInv(Profile profile) {
-        createInv(profile);
-        super.openInv(profile);
-    }
-
     public void addAchievements(Profile profile) {
         for (int i = 0; i < inventory.getSize(); i++) {
             try {
@@ -84,7 +78,7 @@ public class AchievementsMenu extends Menu {
             if (slot == 49) {
                 player.player.closeInventory();
             } else if (slot == 45) {
-                MenuManager.profileMenu.openInv(player);
+                new MenuManager().profileMenu.openInv(player);
             }
         } catch (IndexOutOfBoundsException e) {
             return;

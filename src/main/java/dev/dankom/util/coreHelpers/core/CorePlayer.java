@@ -1,4 +1,4 @@
-package dev.dankom.util.coreHelpers;
+package dev.dankom.util.coreHelpers.core;
 
 import dev.dankom.core.profile.Profile;
 import dev.dankom.core.user.UserManager;

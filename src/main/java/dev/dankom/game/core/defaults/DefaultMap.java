@@ -3,7 +3,7 @@ package dev.dankom.game.core.defaults;
 import dev.dankom.game.core.interfaces.IMap;
 import dev.dankom.game.core.interfaces.util.ISpawnpoint;
 import dev.dankom.util.ListHelper;
-import dev.dankom.util.coreHelpers.CoreWorld;
+import dev.dankom.util.coreHelpers.core.CoreWorld;
 
 import java.util.List;
 

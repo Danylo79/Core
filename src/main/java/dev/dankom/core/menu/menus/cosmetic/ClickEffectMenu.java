@@ -52,12 +52,6 @@ public class ClickEffectMenu extends Menu {
         return inventory;
     }
 
-    @Override
-    public void openInv(Profile profile) {
-        createInv(profile);
-        super.openInv(profile);
-    }
-
     public void addKillMessages(Profile profile) {
         for (int i = 0; i < inventory.getSize(); i++) {
             try {
@@ -82,7 +76,7 @@ public class ClickEffectMenu extends Menu {
             if (slot == 49) {
                 player.player.closeInventory();
             } else if (slot == 45) {
-                MenuManager.cosmeticMenu.openInv(player);
+                new MenuManager().cosmeticMenu.openInv(player);
             } else if (CosmeticManager.getCosmetics(CosmeticType.CLICK_EFFECT).get(slot) != null) {
                 Cosmetic m = CosmeticManager.getCosmetics(CosmeticType.CLICK_EFFECT).get(slot);
                 if (m.isUnlocked(player)) {

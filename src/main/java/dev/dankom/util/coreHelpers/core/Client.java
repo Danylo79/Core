@@ -1,4 +1,4 @@
-package dev.dankom.util.coreHelpers;
+package dev.dankom.util.coreHelpers.core;
 
 public enum Client {
 

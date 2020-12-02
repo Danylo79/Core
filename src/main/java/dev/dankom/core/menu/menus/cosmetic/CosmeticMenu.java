@@ -61,26 +61,20 @@ public class CosmeticMenu extends Menu {
     }
 
     @Override
-    public void openInv(Profile profile) {
-        createInv(profile);
-        super.openInv(profile);
-    }
-
-    @Override
     public void onClick(Profile player, int slot) {
         try {
             if (slot == 49) {
                 player.player.closeInventory();
             } else if (slot == 45) {
-                MenuManager.profileMenu.openInv(player);
+                new MenuManager().profileMenu.openInv(player);
             } else if (slot == 10) {
-                MenuManager.killMessagesMenu.openInv(player);
+                new MenuManager().killMessagesMenu.openInv(player);
             } else if (slot == 12) {
-                MenuManager.projectileTrailMenu.openInv(player);
+                new MenuManager().projectileTrailMenu.openInv(player);
             } else if (slot == 14) {
-                MenuManager.killEffectMenu.openInv(player);
+                new MenuManager().killEffectMenu.openInv(player);
             } else if (slot == 16) {
-                MenuManager.clickEffectMenu.openInv(player);
+                new MenuManager().clickEffectMenu.openInv(player);
             }
         } catch (IndexOutOfBoundsException e) {
             return;

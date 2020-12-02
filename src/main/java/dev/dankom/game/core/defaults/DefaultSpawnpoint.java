@@ -1,8 +1,7 @@
 package dev.dankom.game.core.defaults;
 
 import dev.dankom.game.core.interfaces.util.ISpawnpoint;
-import dev.dankom.util.coreHelpers.CoreLocation;
-import org.bukkit.Location;
+import dev.dankom.util.coreHelpers.core.CoreLocation;
 
 public class DefaultSpawnpoint implements ISpawnpoint {
 

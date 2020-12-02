@@ -95,24 +95,18 @@ public class ProfileMenu extends Menu {
     }
 
     @Override
-    public void openInv(Profile profile) {
-        createInv(profile);
-        super.openInv(profile);
-    }
-
-    @Override
     public void onClick(Profile player, int slot) {
         try {
             if (slot == 49) {
                 player.player.closeInventory();
             } else if (slot == 20) {
-                MenuManager.prestigeMenu.openInv(player);
+                new MenuManager().prestigeMenu.openInv(player);
             } else if (slot == 21) {
-                MenuManager.achievementsMenu.openInv(player);
+                new MenuManager().achievementsMenu.openInv(player);
             } else if (slot == 23) {
-                MenuManager.cosmeticMenu.openInv(player);
+                new MenuManager().cosmeticMenu.openInv(player);
             } else if (slot == 24) {
-                MenuManager.lobbySettingsMenu.openInv(player);
+                new MenuManager().lobbySettingsMenu.openInv(player);
             }
         } catch (IndexOutOfBoundsException e) {
             return;

@@ -5,7 +5,7 @@ import com.comphenix.protocol.ProtocolManager;
 import dev.dankom.logger.LogLevel;
 import dev.dankom.logger.Logger;
 import dev.dankom.util.Validation;
-import dev.dankom.util.coreHelpers.CorePlayer;
+import dev.dankom.util.coreHelpers.core.CorePlayer;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;

@@ -19,6 +19,10 @@ public class ItemHelper extends ItemStack {
         super(new ItemStack(material, amt));
     }
 
+    public ItemHelper(Material material) {
+        super(new ItemStack(material, 1));
+    }
+
     public ItemHelper(Material material, int amt, DyeColor color) {
         super(new ItemStack(material, amt, color.getData()));
     }

@@ -54,12 +54,6 @@ public class KillMessageMenu extends Menu {
         return inventory;
     }
 
-    @Override
-    public void openInv(Profile profile) {
-        createInv(profile);
-        super.openInv(profile);
-    }
-
     public void addKillMessages(Profile profile) {
         for (int i = 0; i < inventory.getSize(); i++) {
             try {
@@ -84,7 +78,7 @@ public class KillMessageMenu extends Menu {
             if (slot == 49) {
                 player.player.closeInventory();
             } else if (slot == 45) {
-                MenuManager.cosmeticMenu.openInv(player);
+                new MenuManager().cosmeticMenu.openInv(player);
             } else if (CosmeticManager.getCosmetics(CosmeticType.KILL_MESSAGE).get(slot) != null) {
                 Cosmetic m = CosmeticManager.getCosmetics(CosmeticType.KILL_MESSAGE).get(slot);
                 if (m.isUnlocked(player)) {

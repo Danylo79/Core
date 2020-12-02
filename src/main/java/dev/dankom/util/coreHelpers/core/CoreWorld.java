@@ -1,6 +1,9 @@
-package dev.dankom.util.coreHelpers;
+package dev.dankom.util.coreHelpers.core;
 
 import dev.dankom.core.lobby.LobbyManager;
+import dev.dankom.util.Validation;
+import dev.dankom.util.coreHelpers.lobby.LobbyType;
+import dev.dankom.util.coreHelpers.lobby.LobbyWorld;
 import net.minecraft.server.v1_8_R1.WorldServer;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
@@ -8,7 +11,6 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.craftbukkit.v1_8_R1.CraftWorld;
-import org.bukkit.entity.Player;
 import org.bukkit.generator.ChunkGenerator;
 
 import java.io.File;
@@ -61,6 +63,10 @@ public class CoreWorld extends CraftWorld {
     public boolean isLobby() {
         List<String> lobbies = LobbyManager.database().getStringList("lobbies");
         return lobbies.contains(getName());
+    }
+
+    public LobbyWorld getAsLobby() {
+        return LobbyWorld.toLobbyWorld(LobbyType.MINI, this);
     }
 
     public static CoreWorld toCoreWorld(World world) {
