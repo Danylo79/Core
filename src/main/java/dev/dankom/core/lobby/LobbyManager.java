@@ -117,9 +117,9 @@ public class LobbyManager implements Listener {
 
     @EventHandler
     public void onChangeWorld(PlayerChangedWorldEvent e) {
-        List<String> lobbies = database().getStringList("lobbies");
+        String lobby = database().getString("lobbby");
         Profile profile = new Profile(e.getPlayer());
-        if (lobbies.contains(e.getPlayer().getWorld().getName())) {
+        if (lobby.equalsIgnoreCase(e.getPlayer().getWorld().getName())) {
             profile.set("network.lobby", true);
             profile.getProfileManager().refreshPlayer(true, profile);
             profile.player.teleport(new Location(profile.player.getWorld(), (double) database().get("x"), (double) database().get("y"), (double) database().get("z")));
@@ -131,9 +131,9 @@ public class LobbyManager implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
-        List<String> lobbies = database().getStringList("lobbies");
+        String lobby = database().getString("lobbby");
         Profile profile = new Profile(e.getPlayer());
-        if (lobbies.contains(e.getPlayer().getWorld().getName())) {
+        if (lobby.equalsIgnoreCase(e.getPlayer().getWorld().getName())) {
             profile.set("network.lobby", true);
             profile.getProfileManager().refreshPlayer(true, profile);
             profile.player.teleport(new Location(profile.player.getWorld(), (double) database().get("x"), (double) database().get("y"), (double) database().get("z")));

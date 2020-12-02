@@ -18,7 +18,7 @@ public class RankCommands implements CommandExecutor {
                     Profile profile = new Profile(args[0]);
                     profile.getProfileManager().setRank(rank, profile);
                     profile.update();
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aSet " + profile.player.getDisplayName() + "&a's rank to " + rank.getDisplay() + "&a!"));
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aSet " + profile.player.getDisplayName() + "&a's rank to " + rank.getDisplay(profile) + "&a!"));
                 } else {
                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&c" + args[1] + " is not a rank or " + args[0] + " is not a player!"));
                 }

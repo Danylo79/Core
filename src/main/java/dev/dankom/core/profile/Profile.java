@@ -55,6 +55,7 @@ public class Profile {
         addData("network.prestigeIcon", "");
         addData("network.lobby", false);
         addData("network.game.id", "");
+        addData("network.plus.color", "&7");
         //Lobby
         addData("lobby.hidePlayers", false);
         addData("lobby.fly", false);
@@ -74,7 +75,7 @@ public class Profile {
 
     public void update() {
         player.setPlayerListName(getFullName());
-        NametagEdit.getApi().setNametag(player, getPrefix(), "");
+        NametagEdit.getApi().setNametag(player, getRank().getColor(), "");
     }
 
     public Rank getRank() {
@@ -106,6 +107,10 @@ public class Profile {
         database().reloadConfig();
     }
 
+    public int getLevel() {
+        return (int) get("network.level");
+    }
+
     public ConfigFile database() {
         return Start.getInstance().getFileManager().databaseFile;
     }
@@ -115,7 +120,7 @@ public class Profile {
     }
 
     public String getPrefix() {
-        return ChatColor.translateAlternateColorCodes('&', getRank().getColor() + getRank().getDisplay() + (getRank().getDisplay().equals("") ? "" : " "));
+        return ChatColor.translateAlternateColorCodes('&', getRank().getColor() + getRank().getDisplay(this) + (getRank().getDisplay(this).equals("") ? "" : " "));
     }
 
     public String getSuffix() {

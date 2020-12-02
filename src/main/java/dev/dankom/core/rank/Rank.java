@@ -1,5 +1,7 @@
 package dev.dankom.core.rank;
 
+import dev.dankom.core.profile.Profile;
+
 public enum Rank {
 
     //Basic
@@ -7,12 +9,12 @@ public enum Rank {
     VIP("VIP", "&a[VIP]", "&a", 1, 1.5),
     VIP_PLUS("VIP+", "&a[VIP&6+&a]", "&a", 2, 2),
     MVP("MVP", "&b[MVP]", "&b", 3, 3.5),
-    MVP_PLUS("MVP+", "&b[&aMVP+&b]", "&b", 4, 5),
-    MVP_PLUS_PLUS("MVP++", "&6[MVP&0++&6]", "&6", 5, 7.5),
+    MVP_PLUS("MVP+", "&b[&aMVP%p%&b]", "&b", 4, 5),
+    MVP_PLUS_PLUS("MVP++", "&6[MVP%p%%p%&6]", "&6", 5, 7.5),
     //Media
     YOUTUBE("YOUTUBE", "&c[&fYOUTUBE&c]", "&c", 6, 10),
-    TWITCH("&9YOUTUBE", "&9[&fYOUTUBE&9]", "&9", 7, 10),
-    MIXER("&bYOUTUBE", "&b[&fYOUTUBE&b]", "&b", 8, 10),
+    TWITCH("TWITCH", "&5[&fTWITCH&5]", "&5", 7, 10),
+    MIXER("BLENDER", "&3[&fBLENDER&3]", "&3", 8, 10),
     //Admins and Higher Ranks
     ADMIN("ADMIN", "&c[ADMIN]", "&c", 9, 10),
     HELPER("HELPER", "&9[HELPER]", "&9", 10, 10),
@@ -44,6 +46,12 @@ public enum Rank {
 
     public String getDisplay() {
         return display;
+    }
+
+    public String getDisplay(Profile profile) {
+        String out = getDisplay();
+        out = out.replaceAll("%p%", profile.get("network.plus.color") + "+");
+        return out;
     }
 
     public String getColor() {
