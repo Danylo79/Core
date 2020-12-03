@@ -1,6 +1,8 @@
 package dev.dankom.core.rank;
 
 import dev.dankom.core.profile.Profile;
+import dev.dankom.core.rank.format.RankFormat;
+import org.bukkit.ChatColor;
 
 public enum Rank {
 
@@ -52,6 +54,14 @@ public enum Rank {
         String out = getDisplay();
         out = out.replaceAll("%p%", profile.get("network.plus.color") + "+");
         return out;
+    }
+
+    public String getDisplay(String plusColor) {
+        return getDisplay(new RankFormat(plusColor + "+", "%p%"));
+    }
+
+    public String getDisplay(RankFormat format) {
+        return ChatColor.translateAlternateColorCodes('&', format.format(getDisplay()));
     }
 
     public String getColor() {

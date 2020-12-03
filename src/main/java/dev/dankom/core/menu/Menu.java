@@ -23,6 +23,13 @@ public class Menu {
         this.amtOfSlots = inventory.getSize();
     }
 
+    public Inventory getInventory(Profile profile) {
+        if (inventory == null) {
+            inventory = createInv(profile);
+        }
+        return inventory;
+    }
+
     public Inventory createInv(Profile profile) {
         this.inventory = Bukkit.createInventory(null, amtOfSlots, ChatColor.translateAlternateColorCodes('&', title));
         return inventory;

@@ -78,7 +78,8 @@ public class AchievementsMenu extends Menu {
             if (slot == 49) {
                 player.player.closeInventory();
             } else if (slot == 45) {
-                new MenuManager().profileMenu.openInv(player);
+                player.getMenuManager().profileMenu.openInv(player);
+                player.player.closeInventory();
             }
         } catch (IndexOutOfBoundsException e) {
             return;

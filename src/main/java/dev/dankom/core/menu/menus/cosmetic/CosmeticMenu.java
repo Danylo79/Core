@@ -66,15 +66,15 @@ public class CosmeticMenu extends Menu {
             if (slot == 49) {
                 player.player.closeInventory();
             } else if (slot == 45) {
-                new MenuManager().profileMenu.openInv(player);
+                player.getMenuManager().profileMenu.openInv(player);
             } else if (slot == 10) {
-                new MenuManager().killMessagesMenu.openInv(player);
+                player.getMenuManager().killMessagesMenu.openInv(player);
             } else if (slot == 12) {
-                new MenuManager().projectileTrailMenu.openInv(player);
+                player.getMenuManager().projectileTrailMenu.openInv(player);
             } else if (slot == 14) {
-                new MenuManager().killEffectMenu.openInv(player);
+                player.getMenuManager().killEffectMenu.openInv(player);
             } else if (slot == 16) {
-                new MenuManager().clickEffectMenu.openInv(player);
+                player.getMenuManager().clickEffectMenu.openInv(player);
             }
         } catch (IndexOutOfBoundsException e) {
             return;

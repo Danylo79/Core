@@ -117,7 +117,7 @@ public class LobbyManager implements Listener {
 
     @EventHandler
     public void onChangeWorld(PlayerChangedWorldEvent e) {
-        String lobby = database().getString("lobbby");
+        String lobby = database().getString("lobby");
         Profile profile = new Profile(e.getPlayer());
         if (lobby.equalsIgnoreCase(e.getPlayer().getWorld().getName())) {
             profile.set("network.lobby", true);
@@ -131,7 +131,7 @@ public class LobbyManager implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
-        String lobby = database().getString("lobbby");
+        String lobby = database().getString("lobby");
         Profile profile = new Profile(e.getPlayer());
         if (lobby.equalsIgnoreCase(e.getPlayer().getWorld().getName())) {
             profile.set("network.lobby", true);
@@ -178,7 +178,7 @@ public class LobbyManager implements Listener {
 
     public void click(Profile profile, int slot) {
         if (slot == 1) {
-            new MenuManager().profileMenu.openInv(profile);
+            profile.getMenuManager().profileMenu.openInv(profile);
         }
     }
 

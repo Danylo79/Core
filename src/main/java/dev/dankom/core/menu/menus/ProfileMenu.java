@@ -91,6 +91,12 @@ public class ProfileMenu extends Menu {
         item.setLore("&7Change your lobby experience");
         inventory.setItem(24, item);
 
+        item = new ItemHelper(Material.INK_SACK, 1, DyeColor.GRAY);
+        item.setDisplayName("&aPlus Colors (" + profile.get("network.plus.color") + "+&a)");
+        item.setLore("&7Change the color of your", "&7rank plus");
+        inventory.setItem(29, item);
+
+
         return inventory;
     }
 
@@ -100,13 +106,15 @@ public class ProfileMenu extends Menu {
             if (slot == 49) {
                 player.player.closeInventory();
             } else if (slot == 20) {
-                new MenuManager().prestigeMenu.openInv(player);
+                player.getMenuManager().prestigeMenu.openInv(player);
             } else if (slot == 21) {
-                new MenuManager().achievementsMenu.openInv(player);
+                player.getMenuManager().achievementsMenu.openInv(player);
             } else if (slot == 23) {
-                new MenuManager().cosmeticMenu.openInv(player);
+                player.getMenuManager().cosmeticMenu.openInv(player);
             } else if (slot == 24) {
-                new MenuManager().lobbySettingsMenu.openInv(player);
+                player.getMenuManager().lobbySettingsMenu.openInv(player);
+            } else if (slot == 29) {
+                player.getMenuManager().plusColorsMenu.openInv(player);
             }
         } catch (IndexOutOfBoundsException e) {
             return;

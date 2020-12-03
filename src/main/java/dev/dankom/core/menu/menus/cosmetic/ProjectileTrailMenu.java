@@ -76,7 +76,7 @@ public class ProjectileTrailMenu extends Menu {
             if (slot == 49) {
                 player.player.closeInventory();
             } else if (slot == 45) {
-                new MenuManager().cosmeticMenu.openInv(player);
+                player.getMenuManager().cosmeticMenu.openInv(player);
             } else if (CosmeticManager.getCosmetics(CosmeticType.PROJECTILE_TRAIL).get(slot) != null) {
                 Cosmetic m = CosmeticManager.getCosmetics(CosmeticType.PROJECTILE_TRAIL).get(slot);
                 if (m.isUnlocked(player)) {

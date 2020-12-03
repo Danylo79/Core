@@ -19,7 +19,7 @@ public class NickCommands implements CommandExecutor {
                     } else if (args[0].equalsIgnoreCase("disable")) {
                         profile.disableNick();
                     } else {
-                        new MenuManager().nickMenu.openInv(profile);
+                       profile.getMenuManager().nickMenu.openInv(profile);
                     }
                     return true;
                 } else {

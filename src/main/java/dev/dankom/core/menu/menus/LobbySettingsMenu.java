@@ -61,7 +61,7 @@ public class LobbySettingsMenu extends Menu {
             if (slot == 49) {
                 player.player.closeInventory();
             } else if (slot == 45) {
-                new MenuManager().profileMenu.openInv(player);
+                player.getMenuManager().profileMenu.openInv(player);
             } else if (slot == 21) {
                 player.player.chat("/lobby fly");
             } else if (slot == 23) {

@@ -37,7 +37,7 @@ public class SimpleProfileManager implements IProfileManager {
     @Override
     public void setRank(Rank rank, Profile profile) {
         profile.set("rank", rank.getId());
-        sendActionbar("&aYour rank has been set to " + rank.getDisplay() + "&a!", profile);
+        sendActionbar("&aYour rank has been set to " + rank.getDisplay(profile) + "&a!", profile);
         profile.update();
     }
 

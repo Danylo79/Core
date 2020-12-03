@@ -21,7 +21,6 @@ public final class Core extends Module {
 
     @Override
     public void onEnable() {
-        this.menuManager = new MenuManager();
         this.clientListener = new ClientListener();
 
         registerListener(new ProfileListener());

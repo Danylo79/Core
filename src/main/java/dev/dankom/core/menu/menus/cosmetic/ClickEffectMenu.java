@@ -76,7 +76,7 @@ public class ClickEffectMenu extends Menu {
             if (slot == 49) {
                 player.player.closeInventory();
             } else if (slot == 45) {
-                new MenuManager().cosmeticMenu.openInv(player);
+                player.getMenuManager().cosmeticMenu.openInv(player);
             } else if (CosmeticManager.getCosmetics(CosmeticType.CLICK_EFFECT).get(slot) != null) {
                 Cosmetic m = CosmeticManager.getCosmetics(CosmeticType.CLICK_EFFECT).get(slot);
                 if (m.isUnlocked(player)) {

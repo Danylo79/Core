@@ -19,6 +19,8 @@ public class EmojiRepository {
         emojis.add(new Emoji(":star:", "&e✯", 5));
         emojis.add(new Emoji(">", "&1&c⇨", 5));
         emojis.add(new Emoji("<", "&1&c⇦", 5));
+        emojis.add(new Emoji("OOF", "&c&lOOF", 5));
+        emojis.add(new Emoji("oof", "&c&lOOF", 5));
         //Achievement Based
         emojis.add(new Emoji(":omega:", "Ω") {
             @Override

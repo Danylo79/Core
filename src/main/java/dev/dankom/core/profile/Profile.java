@@ -9,9 +9,12 @@ import dev.dankom.core.file.yml.ConfigFile;
 import dev.dankom.core.guild.Guild;
 import dev.dankom.core.guild.GuildManager;
 import dev.dankom.core.inbox.Inbox;
+import dev.dankom.core.menu.MenuManager;
+import dev.dankom.core.menu.MenuManagers;
 import dev.dankom.core.profile.profileManager.IProfileManager;
 import dev.dankom.core.profile.profileManager.SimpleProfileManager;
 import dev.dankom.core.rank.Rank;
+import dev.dankom.core.user.UserManager;
 import dev.dankom.game.core.GameManager;
 import dev.dankom.game.core.interfaces.IGame;
 import dev.dankom.util.ColorUtil;
@@ -26,6 +29,7 @@ import java.util.UUID;
 
 public class Profile {
     public Player player;
+    private MenuManager menuManager;
 
     public Profile(Player player) {
         this.player = player;
@@ -71,6 +75,10 @@ public class Profile {
         for (CosmeticType c : CosmeticType.values()) {
             addData("cosmetic." + c.getDatabaseName(), "");
         }
+    }
+
+    public MenuManager getMenuManager() {
+        return MenuManagers.getMenuManager(this);
     }
 
     public void update() {

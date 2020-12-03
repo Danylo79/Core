@@ -2,6 +2,7 @@ package dev.dankom.core.user;
 
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
+import dev.dankom.core.Core;
 import dev.dankom.logger.LogLevel;
 import dev.dankom.logger.Logger;
 import dev.dankom.util.Validation;
@@ -41,7 +42,7 @@ public class UserManager {
         return null;
     }
 
-    public Player getCorePlayer(UUID uuid) {
+    public CorePlayer getCorePlayer(UUID uuid) {
         for (Player cp : getPlayers()) {
             if (cp.getUniqueId().equals(uuid)) {
                 return CorePlayer.toCorePlayer(cp);

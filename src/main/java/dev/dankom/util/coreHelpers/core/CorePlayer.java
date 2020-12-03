@@ -1,5 +1,6 @@
 package dev.dankom.util.coreHelpers.core;
 
+import dev.dankom.core.menu.MenuManager;
 import dev.dankom.core.profile.Profile;
 import dev.dankom.core.user.UserManager;
 import dev.dankom.logger.LogLevel;
@@ -21,11 +22,12 @@ import java.util.List;
 public class CorePlayer extends CraftPlayer {
     private String channel;
     private ClientHelper clientHelper;
+    private MenuManager menuManager;
 
     public CorePlayer(CraftServer server, EntityPlayer entity) {
         super(server, entity);
-
         if (!getUserManager().contains(this)) {
+            this.menuManager = new MenuManager(getCoreProfile());
             getUserManager().addPlayer(getCoreHandle().getSpigotReference());
         } else {
             getUserManager().updatePlayer(getUniqueId(), this);
@@ -36,7 +38,7 @@ public class CorePlayer extends CraftPlayer {
         this((CraftServer) player.getServer(), ((CraftPlayer)player).getHandle());
     }
 
-    public CorePlayer(CraftPlayer player) {
+    public CorePlayer(CraftPlayer player, boolean full) {
         this((CraftServer) player.getServer(), player.getHandle());
     }
 
@@ -112,6 +114,10 @@ public class CorePlayer extends CraftPlayer {
 
     public void refresh() {
         getUserManager().updatePlayer(getUniqueId(), this);
+    }
+
+    public MenuManager getMenuManager() {
+        return menuManager;
     }
 
     public class CoreHandle {

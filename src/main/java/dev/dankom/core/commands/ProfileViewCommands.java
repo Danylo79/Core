@@ -14,7 +14,7 @@ public class ProfileViewCommands implements CommandExecutor {
         if (command.getName().equalsIgnoreCase("profile")) {
             if (args[0].equalsIgnoreCase("view")) {
                 Profile viewed = new Profile(Bukkit.getPlayer(args[1]));
-                new MenuManager().profileViewerMenu.openInv(viewed, new Profile((Player) sender));
+                new Profile((Player) sender).getMenuManager().profileViewerMenu.openInv(viewed, new Profile((Player) sender));
             }
         }
         return false;
